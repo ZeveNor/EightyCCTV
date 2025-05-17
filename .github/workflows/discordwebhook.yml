@@ -27,7 +27,7 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
-          description: "New update on BackEND Reposity! Merged"
+          description: "New update on FrontEND Reposity! Merged"
           color: 0x00FF00
-          url: "https://github.com/ZeveNor/EightyCCTV-core"
-          title: "[Backend] EightyCCTV."
+          url: "https://github.com/ZeveNor/EightyCCTV"
+          title: "[Frontkend] EightyCCTV."
