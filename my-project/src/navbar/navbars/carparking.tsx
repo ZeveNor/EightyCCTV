@@ -9,7 +9,7 @@ export default function CarPlateSidebar(
   }) {
   return (
     <li>
-      <details open>
+      <details>
         <summary className="text-lg">Car Plates</summary>
         <ul className="text-md">
           <li>
