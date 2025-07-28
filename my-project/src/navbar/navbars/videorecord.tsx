@@ -9,7 +9,7 @@ export default function VideoRecordSidebar(
   }) {
   return (
     <li>
-      <details>
+      <details open>
         <summary className="text-lg">Video Record</summary>
         <ul className="text-md">
           <li>
@@ -17,15 +17,7 @@ export default function VideoRecordSidebar(
               onClick={() => setSelectedMenu(MENU.WATCH_RECORDS)}
               className={selectedMenu === MENU.WATCH_RECORDS ? "font-bold" : ""}
             >
-              Watch Records
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => setSelectedMenu(MENU.SEARCH_RECORDS)}
-              className={selectedMenu === MENU.SEARCH_RECORDS ? "font-bold" : ""}
-            >
-              Search Records
+              Watch Records<span className="badge badge-soft badge-error">Live</span>
             </button>
           </li>
         </ul>

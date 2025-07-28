@@ -10,6 +10,8 @@ import MemberSidebar from "@/navbar/navbars/member";
 import VideoRecordSidebar from "@/navbar/navbars/videorecord";
 import CreateGuestPlateSidebar from "@/navbar/navbars/createguest";
 
+import MJPEGViewer from "@/StreamVideo/stream";
+
 const MENU = {
   DASHBOARD: "Dashboard",
   INTERACTIVE_MAP: "Interactive Map",
@@ -23,15 +25,14 @@ const MENU = {
   SEARCH_MEMBERS: "Search Members",
   MEMBER_HISTORY: "Member History",
   WATCH_RECORDS: "Watch Records",
-  SEARCH_RECORDS: "Search Records",
 };
 
 export default function Home() {
   const [selectedMenu, setSelectedMenu] = useState(MENU.DASHBOARD);
+  const [cameraUrl, setCameraUrl] = useState("ws://localhost:3000/ws/rtsp"); // default to Camera 1
 
   return (
     <div className="h-dvh flex flex-col border">
-
       {/* navbar top */}
       <div className="min-h-16">
         <NavbarComponent />
@@ -41,18 +42,15 @@ export default function Home() {
       <div className="flex flex-1">
         <div className="min-w-40 flex-none h-full p-4" style={{ borderRight: "3px solid rgba(0, 0, 0, 0.12)" }}>
           <div className="flex flex-col justify-between h-full ">
-
             {/* flex top | show menu list */}
             <SideMenuList selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
-
             {/* flex bottom | show slot available */}
             <SlotAvailableProgress />
-          
           </div>
         </div>
 
         {/* Content each link and navbar show here */}
-        <div className="flex-auto h-full p-6">
+        <div className="flex-auto pt-6 pl-6 h-[90vh] overflow-y-auto">
           {selectedMenu === MENU.DASHBOARD && <div>This is Dashboard</div>}
           {selectedMenu === MENU.INTERACTIVE_MAP && <div>Interactive Map Content</div>}
           {selectedMenu === MENU.PARKING_HISTORY && <div>Parking History Content</div>}
@@ -64,8 +62,30 @@ export default function Home() {
           {selectedMenu === MENU.EDIT_MEMBER && <div>Edit Member Content</div>}
           {selectedMenu === MENU.SEARCH_MEMBERS && <div>Search Members Content</div>}
           {selectedMenu === MENU.MEMBER_HISTORY && <div>Member History Content</div>}
-          {selectedMenu === MENU.WATCH_RECORDS && <div>Watch Records Content</div>}
-          {selectedMenu === MENU.SEARCH_RECORDS && <div>Search Records Content</div>}
+          {selectedMenu === MENU.WATCH_RECORDS &&
+            <div className="">
+              <div className="flex flex-row gap-5">
+                <h2 className="text-lg font-bold mb-4">Watch Records</h2>
+                <div className="flex flex-row gap-2">
+                  <button
+                    className={`btn btn-sm ${cameraUrl === "ws://localhost:3000/ws/rtsp" ? "btn-active btn-neutral" : ""}`}
+                    onClick={() => setCameraUrl("ws://localhost:3000/ws/rtsp")}
+                  >
+                    Main Camera
+                  </button>
+                  <button
+                    className={`btn btn-sm ${cameraUrl === "ws://localhost:3000/ws/rtsp2" ? "btn-active btn-neutral" : ""}`}
+                    onClick={() => setCameraUrl("ws://localhost:3000/ws/rtsp2")}
+                  >
+                    Parking Camera
+                  </button>
+                </div>
+              </div>
+              <div className="flex flex-row">
+                <MJPEGViewer url={cameraUrl} />
+              </div>
+            </div>
+          }
         </div>
       </div>
     </div>
