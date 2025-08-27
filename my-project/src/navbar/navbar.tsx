@@ -57,7 +57,13 @@ export function Profile() {
           </a>
         </li>
         <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li>
+          <a onClick={() => {
+              localStorage.removeItem("authToken");
+              window.location.href = "/login";
+          }}>Logout
+          </a>
+        </li>
       </ul>
     </div>
   )

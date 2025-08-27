@@ -18,7 +18,7 @@ export default function ParkingSlotSidebar(
               onClick={() => setSelectedMenu(MENU.INTERACTIVE_MAP)}
               className={selectedMenu === MENU.INTERACTIVE_MAP ? "font-bold" : ""}
             >
-              Interactive Map <span className="badge badge-soft badge-error">Live</span>
+              Interactive Map
             </button>
           </li>
           <li>
