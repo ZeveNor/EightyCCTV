@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import NavbarComponent from "@/navbar/navbar";
 
@@ -28,8 +29,17 @@ const MENU = {
 };
 
 export default function Home() {
+  const router = useRouter();
   const [selectedMenu, setSelectedMenu] = useState(MENU.DASHBOARD);
   const [cameraUrl, setCameraUrl] = useState("ws://localhost:3000/ws/rtsp"); // default to Camera 1
+
+  useEffect(() => {
+    // Check for token (or any auth state you use)
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      router.replace("/");
+    }
+  }, [router]);
 
   return (
     <div className="h-dvh flex flex-col border">
