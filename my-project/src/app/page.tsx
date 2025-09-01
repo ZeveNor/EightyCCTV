@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import NavbarComponent from "@/navbar/navbar";
+
+import ParkingSlot from "@/parking-slot/parking-slot";
 
 import DashboardSidebar from "@/navbar/navbars/dashboard";
 import ParkingSlotSidebar from "@/navbar/navbars/parkingslot";
@@ -34,7 +35,6 @@ export default function Home() {
   const [cameraUrl, setCameraUrl] = useState("ws://localhost:3000/ws/rtsp"); // default to Camera 1
 
   useEffect(() => {
-    // Check for token (or any auth state you use)
     const token = localStorage.getItem("authToken");
     if (!token) {
       router.replace("/");
@@ -54,15 +54,17 @@ export default function Home() {
           <div className="flex flex-col justify-between h-full ">
             {/* flex top | show menu list */}
             <SideMenuList selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
-            {/* flex bottom | show slot available */}
-            <SlotAvailableProgress />
           </div>
         </div>
 
         {/* Content each link and navbar show here */}
-        <div className="flex-auto pt-6 pl-6 h-[90vh] overflow-y-auto">
+        <div className="flex-auto h-[90vh] overflow-y-auto">
           {selectedMenu === MENU.DASHBOARD && <div>This is Dashboard</div>}
-          {selectedMenu === MENU.INTERACTIVE_MAP && <div>Interactive Map Content</div>}
+          {selectedMenu === MENU.INTERACTIVE_MAP &&
+            <div className="slot-background pt-6 pl-6 h-full overflow-hidden">
+              <ParkingSlot />
+            </div>
+          }
           {selectedMenu === MENU.PARKING_HISTORY && <div>Parking History Content</div>}
           {selectedMenu === MENU.SEARCH_PLATE && <div>Search Plate Content</div>}
           {selectedMenu === MENU.SEARCH_MEMBER && <div>Search Member Content</div>}
@@ -73,7 +75,7 @@ export default function Home() {
           {selectedMenu === MENU.SEARCH_MEMBERS && <div>Search Members Content</div>}
           {selectedMenu === MENU.MEMBER_HISTORY && <div>Member History Content</div>}
           {selectedMenu === MENU.WATCH_RECORDS &&
-            <div className="">
+            <div className="pt-6 pl-6">
               <div className="flex flex-row gap-5">
                 <h2 className="text-lg font-bold mb-4">Watch Records</h2>
                 <div className="flex flex-row gap-2">
