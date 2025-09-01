@@ -29,3 +29,7 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.slot-background{
+  background: radial-gradient(1200px 600px at 30% -10%, #f4f4f6 0%, #dfe1e659 55%, #bcbec15c 100%);
+}
