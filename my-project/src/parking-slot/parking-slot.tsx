@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import "./parking.css";
 import { getSlotData } from "@/api/slot/slot";
 
-const POLL_URL = "http://localhost:3000/api/slots";
+const POLL_URL = "http://localhost:3000/api/slots/status";
 
 function idOf(r: string, c: number) {
   return `${r}${c}`;
@@ -53,6 +53,7 @@ export default function ParkingSlot() {
     // pass setLayout so the poller updates rows/cols dynamically
     let slotData = getSlotData(POLL_URL, mountedRef, setOccupied, setLayout);
     slotData();
+  
     intervalId = window.setInterval(slotData, 2000);
 
     return () => {

@@ -10,6 +10,8 @@ export default function LoginPage() {
     e.preventDefault();
     
     const res = await handleLoginFunc(email, password);
+    console.log(res);
+    
 
     if (res.result.status === 200) {
       localStorage.setItem("authToken", res.result.data.token);
