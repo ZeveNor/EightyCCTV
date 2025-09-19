@@ -10,13 +10,16 @@ export function getSlotData(
   return async function poll() {
     try {
       const res = await fetch(URL, { cache: "no-store" });
+      console.log(res);
+
       if (!res.ok) return;
+      const json = await res.json();
       const data: Array<{
         id: number;
         slot_name: string;
         is_parked: boolean;
-        slot_rows_name?: string;
-      }> = await res.json();
+      }> = json.result || [];
+
       if (!mountedRef.current) return;
 
       // compute occupied ids
@@ -29,11 +32,13 @@ export function getSlotData(
       if (setLayout) {
         const rowsSet = new Set<string>();
         const colsSet = new Set<number>();
-        for (const s of data) {
-          if (s.slot_rows_name) rowsSet.add(s.slot_rows_name);
-          const m = String(s.slot_name).match(/\d+/);
-          if (m) colsSet.add(parseInt(m[0], 10));
-        }
+        data.forEach((s) => {
+          const match = s.slot_name.match(/^([A-Z]+)(\d+)$/);
+          if (match) {
+            rowsSet.add(match[1]);
+            colsSet.add(parseInt(match[2], 10));
+          }
+        });
         const rows = Array.from(rowsSet).sort();
         const cols = Array.from(colsSet).sort((a, b) => a - b);
         setLayout({ rows, cols });

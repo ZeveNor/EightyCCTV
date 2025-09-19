@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import NavbarComponent from "@/navbar/navbar";
 
 import ParkingSlot from "@/parking-slot/parking-slot";
+import SlotHistory from "@/slot-history/slot-history";
 
 import DashboardSidebar from "@/navbar/navbars/dashboard";
 import ParkingSlotSidebar from "@/navbar/navbars/parkingslot";
@@ -15,7 +16,7 @@ import CreateGuestPlateSidebar from "@/navbar/navbars/createguest";
 import MJPEGViewer from "@/StreamVideo/stream";
 
 const MENU = {
-  DASHBOARD: "Dashboard",
+  // DASHBOARD: "Dashboard",
   INTERACTIVE_MAP: "Interactive Map",
   PARKING_HISTORY: "Parking History",
   SEARCH_PLATE: "Search Plate",
@@ -31,7 +32,7 @@ const MENU = {
 
 export default function Home() {
   const router = useRouter();
-  const [selectedMenu, setSelectedMenu] = useState(MENU.DASHBOARD);
+  const [selectedMenu, setSelectedMenu] = useState(MENU.INTERACTIVE_MAP);
   const [cameraUrl, setCameraUrl] = useState("ws://localhost:3000/ws/rtsp"); // default to Camera 1
 
   useEffect(() => {
@@ -59,14 +60,20 @@ export default function Home() {
 
         {/* Content each link and navbar show here */}
         <div className="flex-auto h-[90vh] overflow-y-auto">
-          {selectedMenu === MENU.DASHBOARD && <div>This is Dashboard</div>}
+          {/* {selectedMenu === MENU.DASHBOARD && <div>This is Dashboard</div>} */}
           {selectedMenu === MENU.INTERACTIVE_MAP &&
             <div className="slot-background pt-6 pl-6 h-full overflow-hidden">
               <ParkingSlot />
             </div>
           }
-          {selectedMenu === MENU.PARKING_HISTORY && <div>Parking History Content</div>}
-          {selectedMenu === MENU.SEARCH_PLATE && <div>Search Plate Content</div>}
+          {selectedMenu === MENU.PARKING_HISTORY &&
+            <div>
+              <SlotHistory />
+            </div>
+          }
+          {selectedMenu === MENU.SEARCH_PLATE &&
+            <div>Parking History Content</div>
+          }
           {selectedMenu === MENU.SEARCH_MEMBER && <div>Search Member Content</div>}
           {selectedMenu === MENU.CREATE_GUEST_PLATE && <div>Create Guest Plate Content</div>}
           {selectedMenu === MENU.CAR_HISTORY && <div>Car Plate History Content</div>}
@@ -110,7 +117,7 @@ function SideMenuList({ selectedMenu, setSelectedMenu }: { selectedMenu: string,
       <ul className="menu bg-base-200 rounded-box w-56 gap-2 ">
 
         {/* Dashboard */}
-        <DashboardSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+        {/* <DashboardSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} /> */}
 
         {/* Parking Slot */}
         <ParkingSlotSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
@@ -125,7 +132,7 @@ function SideMenuList({ selectedMenu, setSelectedMenu }: { selectedMenu: string,
         <VideoRecordSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
 
         {/* Create Guest Button */}
-        <CreateGuestPlateSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+        {/* <CreateGuestPlateSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} /> */}
 
       </ul>
     </div>
