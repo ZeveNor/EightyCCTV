@@ -9,8 +9,9 @@ export async function getAllUsers() {
   });
   if (!res.ok) throw new Error("Failed to fetch users");
   const data = await res.json();
-  return data.result;
+  return data.result; 
 }
+
 
 export async function updateUserProfile(
   id: string,
