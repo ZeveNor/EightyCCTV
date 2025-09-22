@@ -1,10 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: light --default, night --dark;
-  include: ;
-  exclude: ; 
-  prefix: ;
-  logs: true;
+  themes: light --default, cupcake;
 }
 
 @tailwind base;
@@ -30,6 +26,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.slot-background{
-  background: radial-gradient(1200px 600px at 30% -10%, #f4f4f6 0%, #dfe1e659 55%, #bcbec15c 100%);
-}
+/* .slot-background{
+  background: radial-gradient(1200px 600px at 50% -20%, #493b443c 0%, #7ffa640d 55%, #ffffff5c 100%);
+} */

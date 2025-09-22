@@ -11,7 +11,7 @@ export default function RegisterPage() {
   const [otp, setOtp] = useState("");
   const [counter, setCounter] = useState(0);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  let isVerifyComplete : boolean = true; 
+  const [isVerifyComplete, setIsVerifyComplete] = useState<boolean>(true);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -42,17 +42,19 @@ export default function RegisterPage() {
       console.log("clicked");
       const res = await handleOtpVerify(email, otp);
       console.log(res);
-      
-      if (res == 200) {
-        isVerifyComplete = false;
+      // handleOtpVerify should return a numeric status or boolean
+      // If the API returned an object, normalize it here.
+      const status = typeof res === "object" && res !== null ? res.status ?? res.result?.status ?? res.result ?? res : res;
+      if (Number(status) === 200) {
+        setIsVerifyComplete(false);
       } else {
-        isVerifyComplete = true;
+        setIsVerifyComplete(true);
       }
     }
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center h-screen bg-white">
       <div
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
@@ -62,7 +64,7 @@ export default function RegisterPage() {
           backgroundSize: "40px 40px",
         }}
       />
-      <fieldset className="fieldset z-2 bg-base-200 border-base-300 rounded-box w-xs border p-4">
+      <fieldset className="fieldset z-2 bg-white rounded-lg border-base-300 rounded-box w-xs border p-4">
         <legend className="fieldset-legend text-center" style={{ fontSize: "40px", color: "#160d4eff" }}>
           EIGHTY CCTV
         </legend>
@@ -177,7 +179,7 @@ export default function RegisterPage() {
               <div className="join floating-label validator ">
                 <span>กรอกอีเมลมหาวิทยาลัย แล้วกดยืนยัน</span>
                 <input
-                  className="input join-item"
+                  className="input join-item validator" 
                   type="email"
                   placeholder="example@mail.rmutk.ac.th"
                   value={email}
@@ -209,22 +211,27 @@ export default function RegisterPage() {
               </label>
             </fieldset>
             <div className="validator-hint hidden">Enter valid email address</div>
-            <button
-              className="btn btn-outline-neutral w-full  join-item"
-              style={{ borderRadius: "5px" }}
-              type="button"
-              onClick={handleVerifyCode}
-            >
+            <div className="flex justify-center">
+              <button
+                className="btn btn-neutral btn-outline w-full mt-2 join-item"
+                style={{ borderRadius: "5px" }}
+                type="button"
+                onClick={handleVerifyCode}
+              >
               ตรวจสอบรหัสยืนยัน
             </button>
+            </div>
           </div>
 
-
-          <button
-            className="btn w-full btn-neutral"
-            type="submit"
-            disabled={!isVerifyComplete}
-          >Register</button>
+          <div className="flex justify-center">
+            <button
+              className="btn w-full btn-neutral btn-outline"
+              type="submit"
+              disabled={isVerifyComplete}
+            >
+              Register
+            </button>
+          </div>
           <a href="/login" className="link mt-4 block text-center">Already have an account? Login</a>
         </form>
       </fieldset>

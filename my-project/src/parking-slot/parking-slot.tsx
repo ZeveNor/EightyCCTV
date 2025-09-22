@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./parking.css";
+import "../navbar/nav-mobile.css";
 import { getSlotData } from "@/api/slot/slot";
 
 const POLL_URL = "http://localhost:3000/api/slots/status";
@@ -71,6 +72,7 @@ export default function ParkingSlot() {
 
   return (
     <div className="wrap">
+      <RotateWarning />
       <div className="lot">
         <div className="floor">
           <div className="grid" id="grid">
@@ -104,3 +106,34 @@ export default function ParkingSlot() {
   );
 }
 
+export function RotateWarning() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    function checkOrientation() {
+      if (window.matchMedia("(orientation: portrait)").matches) {
+        setShow(true);
+      } else {
+        setShow(false);
+      }
+    }
+
+    checkOrientation();
+
+    window.addEventListener("resize", checkOrientation);
+    window.addEventListener("orientationchange", checkOrientation);
+
+    return () => {
+      window.removeEventListener("resize", checkOrientation);
+      window.removeEventListener("orientationchange", checkOrientation);
+    };
+  }, []);
+
+  if (!show) return null;
+
+  return (
+    <div className="fixed inset-0 z-90 flex items-center justify-center bg-black/80 text-white text-2xl text-center p-6">
+      กรุณาหมุนโทรศัพท์เป็นแนวนอน
+    </div>
+  );
+}

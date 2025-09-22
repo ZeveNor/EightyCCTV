@@ -30,14 +30,6 @@ export default function CarPlateSidebar(
           </li>
           <li>
             <button
-              onClick={() => setSelectedMenu(MENU.CREATE_GUEST_PLATE)}
-              className={selectedMenu === MENU.CREATE_GUEST_PLATE ? "font-bold" : ""}
-            >
-              Create Guest Plate
-            </button>
-          </li>
-          <li>
-            <button
               onClick={() => setSelectedMenu(MENU.CAR_HISTORY)}
               className={selectedMenu === MENU.CAR_HISTORY ? "font-bold" : ""}
             >
