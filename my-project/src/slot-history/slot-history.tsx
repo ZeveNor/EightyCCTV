@@ -1,29 +1,9 @@
 "use client";
 
-import { Grid , html } from "gridjs";
+import { Grid } from "gridjs";
 import "gridjs/dist/theme/mermaid.css";
 import { useEffect, useRef, useState } from "react";
 import { getHistory } from "@/api/slot/slothistory";
-
-const data = [
-  {
-    id: 1,
-    name: "Zev",
-    surname: "Elx",
-    email: "zeven@flune.xyz",
-    telephone: "0123456789",
-    role: "admin",
-  },
-  {
-    id: 4,
-    name: "ปานเทพ",
-    surname: "แก้วมณี",
-    email: "655021001236@mail.rmutk.ac.th",
-    telephone: "0909845370",
-    role: "user",
-  },
-];
-
 
 export default function SlotHistory() {
   const [search, setSearch] = useState("");
@@ -33,14 +13,14 @@ export default function SlotHistory() {
   useEffect(() => {
     let mounted = true;
 
-    // const fetchData = async () => {
-      // const data = await getHistory();
-    //   if (!mounted) return;
+    const fetchData = async () => {
+      const data = await getHistory();
+      if (!mounted) return;
       dataRef.current = data;
-    //   renderGrid();
-    // };
+      renderGrid();
+    };
 
-    // fetchData();
+    fetchData();
 
     return () => {
       mounted = false;
@@ -69,89 +49,35 @@ export default function SlotHistory() {
       container.innerHTML = "";
     }
 
-    // ฟิลเตอร์ข้อมูลตามคำค้นหา
     const filtered = dataRef.current.filter((item: any) => {
       if (!search) {
         return true;
       }
-      const s = search.toLowerCase(); // ตรวจสอบว่ามีคำค้นหาในสตริงนี้ไหม
+      const s = search.toLowerCase();
       return (
-        (item.id)
-          .toLocaleString() // เปลี่ยนเป็น string
-          .includes(s) // ตรวจสอบว่ามีคำค้นหาในสตริงนี้ไหม
-        ||
-        (item.name || "")
-          .toLowerCase() // เปลี่ยนเป็น ตัวพิมพ์เล็ก
-          .includes(s) // ตรวจสอบว่ามีคำค้นหาในสตริงนี้ไหม
-        ||
-        (item.surname || "")
-          .toLowerCase() // เปลี่ยนเป็น ตัวพิมพ์เล็ก
-          .includes(s) // ตรวจสอบว่ามีคำค้นหาในสตริงนี้ไหม
-        ||
-        (item.email || "")
-          .toLowerCase() // เปลี่ยนเป็น ตัวพิมพ์เล็ก
-          .includes(s) // ตรวจสอบว่ามีคำค้นหาในสตริงนี้ไหม
-        ||
-        (item.telephone || "")
-          .toLowerCase() // เปลี่ยนเป็น ตัวพิมพ์เล็ก
-          .includes(s) // ตรวจสอบว่ามีคำค้นหาในสตริงนี้ไหม
-        ||
-        (item.role || "")
-          .toLowerCase() // เปลี่ยนเป็น ตัวพิมพ์เล็ก
-          .includes(s) // ตรวจสอบว่ามีคำค้นหาในสตริงนี้ไหม
+        new Date(item.changed_at)
+          .toLocaleString()
+          .toLowerCase()
+          .includes(s) ||
+        (item.slot_name || "")
+          .toLowerCase().includes(s) ||
+        (item.is_parked ? "yes" : "no")
+          .includes(s)
       );
     });
 
     gridRef.current = new Grid({
-      // ตั้งหัวตาราง
-      columns: [
-        "ID",
-        "Name",
-        "Surname",
-        "Email",
-        "Telephone",
-        "Role",
-        "Action",
-        "Action"
-      ],
-      // ใส่ข้อมูลให้ Library gridjs
+      columns: ["Time", "Slot Name", "Status"],
       data: filtered.map((item: any) => [
-        item.id,
-        item.name,
-        item.surname,
-        item.email,
-        item.telephone,
-        item.role,
-        
-        // ใส่ปุ่มกด ในนี้
-        html(
-          `<div ClassName="gap-5">
-            <div style='padding: 2px; border: 1px solid #ccc;border-radius: 4px;'>
-              <center>hello!</center>
-            </div>
-            <div style='padding: 2px; border: 1px solid #ccc;border-radius: 4px;'>
-              <center>hello!</center>
-            </div>
-          </div>`
-        ),
-        html(
-          `<div ClassName="gap-5">
-            <div style='padding: 2px; border: 1px solid #ccc;border-radius: 4px;'>
-              <center>hello!</center>
-            </div>
-            <div style='padding: 2px; border: 1px solid #ccc;border-radius: 4px;'>
-              <center>hello!</center>
-            </div>
-          </div>`
-        )
+        new Date(item.changed_at).toLocaleString(),
+        item.slot_name,
+        item.is_parked ? "Yes" : "No",
       ]),
-      // แก้ไข CSS ของตาราง
       style: {
         table: {
           "font-size": "13px",
         },
       },
-      // ทำให้ตารางแสดงข้อมูลกี่ record ต่อหน้า
       pagination: {
         limit: 6,
         summary: false,

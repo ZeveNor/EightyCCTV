@@ -14,10 +14,10 @@ export default function MemberSidebar(
         <ul className="text-md">
           <li>
             <button
-              onClick={() => setSelectedMenu(MENU.ADD_MEMBER)}
+              onClick={() => setSelectedMenu(MENU.MANAGE_MEMBER)}
               className={selectedMenu === MENU.ADD_MEMBER ? "font-bold" : ""}
             >
-              Add Member
+              Members Management
             </button>
           </li>
           <li>
@@ -28,14 +28,7 @@ export default function MemberSidebar(
               Edit Member
             </button>
           </li>
-          <li>
-            <button
-              onClick={() => setSelectedMenu(MENU.SEARCH_MEMBERS)}
-              className={selectedMenu === MENU.SEARCH_MEMBERS ? "font-bold" : ""}
-            >
-              Search Members
-            </button>
-          </li>
+
           <li>
             <button
               onClick={() => setSelectedMenu(MENU.MEMBER_HISTORY)}
