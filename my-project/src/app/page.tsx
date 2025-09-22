@@ -7,17 +7,16 @@ import ParkingSlot from "@/parking-slot/parking-slot";
 import SlotHistory from "@/slot-history/slot-history";
 import MembersManagement from "./members/members-management";
 
-import DashboardSidebar from "@/navbar/navbars/dashboard";
 import ParkingSlotSidebar from "@/navbar/navbars/parkingslot";
 import CarPlateSidebar from "@/navbar/navbars/carparking";
 import MemberSidebar from "@/navbar/navbars/member";
 import VideoRecordSidebar from "@/navbar/navbars/videorecord";
-import CreateGuestPlateSidebar from "@/navbar/navbars/createguest";
 
 import MJPEGViewer from "@/StreamVideo/stream";
 
+import "../navbar/nav-mobile.css";
+
 const MENU = {
-  // DASHBOARD: "Dashboard",
   INTERACTIVE_MAP: "Interactive Map",
   PARKING_HISTORY: "Parking History",
   SEARCH_PLATE: "Search Plate",
@@ -35,7 +34,7 @@ const MENU = {
 export default function Home() {
   const router = useRouter();
   const [selectedMenu, setSelectedMenu] = useState(MENU.INTERACTIVE_MAP);
-  const [cameraUrl, setCameraUrl] = useState("ws://localhost:3000/ws/rtsp"); // default to Camera 1
+  const [cameraUrl, setCameraUrl] = useState("ws://localhost:3000/ws/rtsp"); 
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -47,13 +46,13 @@ export default function Home() {
   return (
     <div className="h-dvh flex flex-col border">
       {/* navbar top */}
-      <div className="min-h-16">
+      <div className="min-h-16 z-100">
         <NavbarComponent />
       </div>
 
       {/* content bottom */}
       <div className="flex flex-1">
-        <div className="min-w-40 flex-none h-full p-4" style={{ borderRight: "3px solid rgba(0, 0, 0, 0.12)" }}>
+        <div id="nav-dt" className="md:min-w-65 w-0 flex-none h-full md:p-4" style={{ borderRight: "3px solid rgba(0, 0, 0, 0.12)" }}>
           <div className="flex flex-col justify-between h-full ">
             {/* flex top | show menu list */}
             <SideMenuList selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
@@ -61,10 +60,9 @@ export default function Home() {
         </div>
 
         {/* Content each link and navbar show here */}
-        <div className="flex-auto h-[90vh] overflow-y-auto">
-          {/* {selectedMenu === MENU.DASHBOARD && <div>This is Dashboard</div>} */}
+        <div className="flex-auto h-[91vh] overflow-y-auto">
           {selectedMenu === MENU.INTERACTIVE_MAP &&
-            <div className="slot-background pt-6 pl-6 h-full overflow-hidden">
+            <div className="slot-background pt-6 md:pl-6 pl-0 h-full overflow-hidden">
               <ParkingSlot />
             </div>
           }
@@ -116,28 +114,26 @@ export default function Home() {
 
 function SideMenuList({ selectedMenu, setSelectedMenu }: { selectedMenu: string, setSelectedMenu: (menu: string) => void }) {
   return (
-    <div className="overflow-y-auto" style={{ height: "calc(90vh - 64px)" }}>
-      <ul className="menu bg-base-200 rounded-box w-56 gap-2 ">
+    <div>
+      
+      {/* Desktop Responsive */}
+      <div className="overflow-y-auto md:block hidden" style={{ height: "calc(90vh - 64px)" }}>
+        <ul className="menu rounded-box w-56 gap-2 ">
 
-        {/* Dashboard */}
-        {/* <DashboardSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} /> */}
+          {/* Parking Slot */}
+          <ParkingSlotSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+          
+          {/* Car Plates */}
+          <CarPlateSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu}/>
+          
+          {/* Members */}
+          <MemberSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu}/>
 
-        {/* Parking Slot */}
-        <ParkingSlotSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
-        
-        {/* Car Plates */}
-        <CarPlateSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu}/>
-        
-        {/* Members */}
-        <MemberSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu}/>
+          {/* Video Records */}
+          <VideoRecordSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
 
-        {/* Video Records */}
-        <VideoRecordSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
-
-        {/* Create Guest Button */}
-        {/* <CreateGuestPlateSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} /> */}
-
-      </ul>
+        </ul>
+      </div>
     </div>
   );
 }

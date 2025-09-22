@@ -1,0 +1,12 @@
+
+@media (max-height: 640px) {
+  #nav-mb{
+    display: block;
+  }
+  #nav-dt{
+    display: none;
+  }
+  #sub-nav-dt{
+    width: 0;
+  }
+}

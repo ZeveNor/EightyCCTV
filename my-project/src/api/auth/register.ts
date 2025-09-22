@@ -24,7 +24,17 @@ export async function handleOtpVerify(email: string, otp: string) {
     const data = await res.json();
     console.log(data);
 
-    return data.status;
+    // The backend sometimes returns { status: 200, result: '...' }
+    // or { result: { status: 200, result: '...' } }
+    // Normalize to return either numeric status or the entire object for flexibility.
+    if (data && typeof data === 'object') {
+      if (typeof data.status === 'number') return data.status;
+      if (data.result && typeof data.result === 'object' && typeof data.result.status === 'number') return data.result.status;
+      if (typeof data.result === 'number') return data.result;
+    }
+
+    // Fallback: return HTTP status code
+    return res.status;
   } catch (error) {
     console.error("Error during email verification request:", error);
   }

@@ -21,7 +21,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen" style={{ backgroundColor: "#f1eefbff" }}>
+    <div className="flex flex-col items-center justify-center h-screen bg-white-500" >
       <div
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
@@ -31,7 +31,7 @@ export default function LoginPage() {
           backgroundSize: "40px 40px",
         }}
       />
-      <fieldset className="fieldset z-2 bg-base-200 border-base-300 rounded-box w-xs border p-4">
+      <fieldset className="fieldset z-2 bg-white border-base-300 rounded-box w-xs border p-4 rounded-lg shadow-lg">
         <legend className="fieldset-legend text-center" style={{fontSize:"40px", color: "#160d4eff"}}>EIGHTY CCTV</legend>
         <form onSubmit={handleLogin}>
           <label className="label">อีเมล</label>
