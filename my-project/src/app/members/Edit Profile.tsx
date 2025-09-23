@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { getAllUsers, userRemove, userUnremove, updateUserProfile } from "@/api/member/member";
 
 export default function MembersManagement() {
-  const [search] = useState("");
+  const [search, setSearch] = useState("");
   const dataRef = useRef<any[]>([]);
   const gridRef = useRef<Grid | null>(null);
 
@@ -33,7 +33,7 @@ export default function MembersManagement() {
   }, [search]);
 
   const renderGrid = () => {
-    const container = document.getElementById("members-table");
+    const container = document.getElementById("slot-history-table");
     if (!container) return;
 
     if (gridRef.current) {
@@ -87,7 +87,7 @@ export default function MembersManagement() {
   };
 
   useEffect(() => {
-    const container = document.getElementById("members-table");
+    const container = document.getElementById("slot-history-table");
     if (!container) return;
 
     const handleRemove = async (e: Event) => {
@@ -178,7 +178,7 @@ export default function MembersManagement() {
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">Members Management</h2>
-      <div id="members-table"></div>
+      <div id="slot-history-table"></div>
     </div>
   );
 }
