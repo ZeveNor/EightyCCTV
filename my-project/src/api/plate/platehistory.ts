@@ -1,7 +1,7 @@
 export function getHistory() {
   const token = localStorage.getItem("authToken");
 
-  return fetch("http://localhost:3000/api/slots/log", {
+  return fetch("http://localhost:3000/api/entry", {
     headers: {
       "Content-Type": "application/json",
       Authorization: token ? `Bearer ${token}` : "",
@@ -9,13 +9,12 @@ export function getHistory() {
     cache: "no-store",
   })
     .then(async (res) => {
-      if (!res.ok) throw new Error("Failed to fetch slot history");
+      if (!res.ok) throw new Error("Failed to fetch plate history");
       const data = await res.json();
-      return data;
+      return data.result?.result?.result || [];
     })
-    .then((data) => data.result)
     .catch((err) => {
-      console.error("Error fetching slot history:", err);
+      console.error("Error fetching plate history:", err);
       return [];
     });
 }

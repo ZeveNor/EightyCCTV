@@ -6,6 +6,8 @@ import NavbarComponent from "@/navbar/navbar";
 import ParkingSlot from "@/parking-slot/parking-slot";
 import SlotHistory from "@/slot-history/slot-history";
 import MembersManagement from "./members/members-management";
+import PlateHistory from "./car-plate/plate";
+import PlateSearchMember from "./car-plate/search-member";
 
 import ParkingSlotSidebar from "@/navbar/navbars/parkingslot";
 import CarPlateSidebar from "@/navbar/navbars/carparking";
@@ -19,7 +21,6 @@ import "../navbar/nav-mobile.css";
 const MENU = {
   INTERACTIVE_MAP: "Interactive Map",
   PARKING_HISTORY: "Parking History",
-  SEARCH_PLATE: "Search Plate",
   SEARCH_MEMBER: "Search Member",
   CREATE_GUEST_PLATE: "Create Guest Plate",
   CAR_HISTORY: "Car Plate History",
@@ -47,7 +48,7 @@ export default function Home() {
     <div className="h-dvh flex flex-col border">
       {/* navbar top */}
       <div className="min-h-16 z-100">
-        <NavbarComponent />
+        <NavbarComponent MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
       </div>
 
       {/* content bottom */}
@@ -71,13 +72,15 @@ export default function Home() {
               <SlotHistory />
             </div>
           }
-          {selectedMenu === MENU.SEARCH_PLATE &&
-            <div>Parking History Content</div>
+          {selectedMenu === MENU.SEARCH_MEMBER &&
+            <div>
+            <PlateSearchMember />
+            </div>}
+          {selectedMenu === MENU.CAR_HISTORY &&
+            <div>
+              <PlateHistory />
+            </div>
           }
-          {selectedMenu === MENU.SEARCH_MEMBER && <div>Search Member Content</div>}
-          {selectedMenu === MENU.CREATE_GUEST_PLATE && <div>Create Guest Plate Content</div>}
-          {selectedMenu === MENU.CAR_HISTORY && <div>Car Plate History Content</div>}
-
           {selectedMenu === MENU.MANAGE_MEMBER && <div><MembersManagement/></div>}
           {selectedMenu === MENU.EDIT_MEMBER && <div>Edit Member Content</div>}
           {selectedMenu === MENU.MEMBER_HISTORY && <div>Member History Content</div>}
