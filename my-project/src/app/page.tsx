@@ -7,6 +7,7 @@ import ParkingSlot from "@/parking-slot/parking-slot";
 import SlotHistory from "@/slot-history/slot-history";
 import MembersManagement from "./members/members-management";
 import MyCars from "./members/Mycars";
+import AdminVehicles from "./CarPlates/AdminVehicles";
 
 import ParkingSlotSidebar from "@/navbar/navbars/parkingslot";
 import CarPlateSidebar from "@/navbar/navbars/carparking";
@@ -87,7 +88,11 @@ export default function Home() {
           {selectedMenu === MENU.SEARCH_PLATE &&
             <div>Parking History Content</div>
           }
-          {selectedMenu === MENU.SEARCH_MEMBER && <div>Search Member Content</div>}
+          {selectedMenu === MENU.SEARCH_MEMBER && userId !== null && (
+            <div>
+              <AdminVehicles/>
+            </div>
+          )}
           {selectedMenu === MENU.CREATE_GUEST_PLATE && <div>Create Guest Plate Content</div>}
           {selectedMenu === MENU.CAR_HISTORY && <div>Car Plate History Content</div>}
 

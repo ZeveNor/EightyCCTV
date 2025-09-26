@@ -12,20 +12,13 @@ export default function CarPlateSidebar(
       <details>
         <summary className="text-lg">Car Plates</summary>
         <ul className="text-md">
-          <li>
-            <button
-              onClick={() => setSelectedMenu(MENU.SEARCH_PLATE)}
-              className={selectedMenu === MENU.SEARCH_PLATE ? "font-bold" : ""}
-            >
-              Search Plate
-            </button>
-          </li>
+
           <li>
             <button
               onClick={() => setSelectedMenu(MENU.SEARCH_MEMBER)}
               className={selectedMenu === MENU.SEARCH_MEMBER ? "font-bold" : ""}
             >
-              Search Member
+              Cars Management
             </button>
           </li>
           <li>

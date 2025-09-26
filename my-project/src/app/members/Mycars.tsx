@@ -21,6 +21,8 @@ export default function MyCars({ userId }: { userId: number }) {
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
   const [color, setColor] = useState("");
+  const [province, setProvince] = useState("");
+
 
   const fetchData = async () => {
     const res = await getVehiclesByUserId(userId);
@@ -51,7 +53,7 @@ export default function MyCars({ userId }: { userId: number }) {
     if (gridRef.current) {
       try {
         gridRef.current.destroy();
-      } catch {}
+      } catch { }
       gridRef.current = null;
       container.innerHTML = "";
     }
@@ -69,9 +71,10 @@ export default function MyCars({ userId }: { userId: number }) {
     });
 
     gridRef.current = new Grid({
-      columns: ["Plate", "Brand", "Model", "Color", "Deleted At", "Actions"],
+      columns: ["Plate", "Province", "Brand", "Model", "Color", "Deleted At", "Actions"],
       data: filtered.map((item: any) => [
         item.license_plate,
+        item.province,
         item.brand,
         item.model,
         item.color,
@@ -127,15 +130,18 @@ export default function MyCars({ userId }: { userId: number }) {
         const row = target.closest("tr");
         if (!row) return;
 
-        const brandCell = row.children[1] as HTMLElement;
-        const modelCell = row.children[2] as HTMLElement;
-        const colorCell = row.children[3] as HTMLElement;
-        const actionCell = row.children[5] as HTMLElement;
+        const provinceCell = row.children[1] as HTMLElement;
+        const brandCell = row.children[2] as HTMLElement;
+        const modelCell = row.children[3] as HTMLElement;
+        const colorCell = row.children[4] as HTMLElement;
+        const actionCell = row.children[6] as HTMLElement;
 
+        const currentProvince = provinceCell.innerText;
         const currentBrand = brandCell.innerText;
         const currentModel = modelCell.innerText;
         const currentColor = colorCell.innerText;
 
+        provinceCell.innerHTML = `<input value="${currentProvince}" class="p-1 border rounded w-full"/>`;
         brandCell.innerHTML = `<input value="${currentBrand}" class="p-1 border rounded w-full"/>`;
         modelCell.innerHTML = `<input value="${currentModel}" class="p-1 border rounded w-full"/>`;
         colorCell.innerHTML = `<input value="${currentColor}" class="p-1 border rounded w-full"/>`;
@@ -153,11 +159,12 @@ export default function MyCars({ userId }: { userId: number }) {
         const row = target.closest("tr");
         if (!row) return;
 
-        const brand = (row.children[1].querySelector("input") as HTMLInputElement).value;
-        const model = (row.children[2].querySelector("input") as HTMLInputElement).value;
-        const color = (row.children[3].querySelector("input") as HTMLInputElement).value;
+        const province = (row.children[1].querySelector("input") as HTMLInputElement).value;
+        const brand = (row.children[2].querySelector("input") as HTMLInputElement).value;
+        const model = (row.children[3].querySelector("input") as HTMLInputElement).value;
+        const color = (row.children[4].querySelector("input") as HTMLInputElement).value;
 
-        updateVehicles({ plate, newPlate: plate, brand, model, color })
+        updateVehicles({ plate, newPlate: plate,province, brand, model, color })
           .then(() => fetchData())
           .catch((err) => console.error(err));
       }
@@ -166,7 +173,7 @@ export default function MyCars({ userId }: { userId: number }) {
         fetchData();
       }
     };
-
+//แบบนี้จะได้ไม่สับสน
     container.addEventListener("click", handleRemove);
     container.addEventListener("click", handleUnremove);
     container.addEventListener("click", handleEdit);
@@ -182,8 +189,9 @@ export default function MyCars({ userId }: { userId: number }) {
   const handleAddVehicle = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await addMyVehicleById({ userId, plate, brand, model, color });
+      await addMyVehicleById({ userId, plate, province ,brand, model, color,  });
       setPlate("");
+      setProvince("");
       setBrand("");
       setModel("");
       setColor("");
@@ -199,48 +207,57 @@ export default function MyCars({ userId }: { userId: number }) {
 
       {/* ✅ ฟอร์มเพิ่มรถใหม่ */}
       <form onSubmit={handleAddVehicle} className="mb-6 p-4 bg-gray-50">
-  <h3 className="text-lg font-semibold mb-2">Add New Vehicle</h3>
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <input
-      type="text"
-      placeholder="License "
-      value={plate}
-      onChange={(e) => setPlate(e.target.value)}
-      className="p-2 bg-white rounded w-full focus:outline-none"
-      required
-    />
-    <input
-      type="text"
-      placeholder="Brand"
-      value={brand}
-      onChange={(e) => setBrand(e.target.value)}
-      className="p-2 bg-white rounded w-full focus:outline-none"
-      required
-    />
-    <input
-      type="text"
-      placeholder="Model"
-      value={model}
-      onChange={(e) => setModel(e.target.value)}
-      className="p-2 bg-white rounded w-full focus:outline-none"
-      required
-    />
-    <input
-      type="text"
-      placeholder="Color"
-      value={color}
-      onChange={(e) => setColor(e.target.value)}
-      className="p-2 bg-white rounded w-full focus:outline-none"
-      required
-    />
-  </div>
-  <button
-    type="submit"
-    className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-  >
-    Add Vehicle
-  </button>
-</form>
+        <h3 className="text-lg font-semibold mb-2">Add New Vehicle</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            type="text"
+            placeholder="License "
+            value={plate}
+            onChange={(e) => setPlate(e.target.value)}
+            className="p-2 bg-white rounded w-full focus:outline-none"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Province"
+            value={province}
+            onChange={(e) => setProvince(e.target.value)}
+            className="p-2 bg-white rounded w-full focus:outline-none"
+            required
+          />
+
+          <input
+            type="text"
+            placeholder="Brand"
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
+            className="p-2 bg-white rounded w-full focus:outline-none"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Model"
+            value={model}
+            onChange={(e) => setModel(e.target.value)}
+            className="p-2 bg-white rounded w-full focus:outline-none"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            className="p-2 bg-white rounded w-full focus:outline-none"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Add Vehicle
+        </button>
+      </form>
 
 
       {/* ตารางรถ */}
