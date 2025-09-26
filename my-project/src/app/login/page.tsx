@@ -9,8 +9,9 @@ export default function LoginPage() {
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     
-    const res = await handleLoginFunc(email, password);
-    console.log(res);
+  const res = await handleLoginFunc(email, password);
+  // Log only the relevant parts to avoid printing large or Promise-like objects
+  console.debug('[login] response status:', res?.result?.status ?? res?.status, 'token?', Boolean(res?.result?.data?.token));
     
 
     if (res.result.status === 200) {

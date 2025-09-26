@@ -14,14 +14,6 @@ export default function CarPlateSidebar(
         <ul className="text-md">
           <li>
             <button
-              onClick={() => setSelectedMenu(MENU.SEARCH_PLATE)}
-              className={selectedMenu === MENU.SEARCH_PLATE ? "font-bold" : ""}
-            >
-              Search Plate
-            </button>
-          </li>
-          <li>
-            <button
               onClick={() => setSelectedMenu(MENU.SEARCH_MEMBER)}
               className={selectedMenu === MENU.SEARCH_MEMBER ? "font-bold" : ""}
             >

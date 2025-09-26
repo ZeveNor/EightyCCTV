@@ -10,7 +10,9 @@ export function getSlotData(
   return async function poll() {
     try {
       const res = await fetch(URL, { cache: "no-store" });
-      console.log(res);
+      // Use debug logging for status to avoid printing the full Response object
+      // which can appear as a pending Promise in DevTools and spam the console
+      console.debug(`[getSlotData] fetched ${URL} status=${res.status}`);
 
       if (!res.ok) return;
       const json = await res.json();
