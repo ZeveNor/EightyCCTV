@@ -12,10 +12,10 @@ export async function getAllUsers() {
   return data.result; 
 }
 
-
 export async function updateUserProfile(
   id: string,
-  { name, surname, telephone }: { name?: string; surname?: string; telephone?: string }
+  { name, surname, telephone, role }: 
+  { name?: string; surname?: string; telephone?: string; role?: string }
 ) {
   const token = localStorage.getItem("authToken");
   const res = await fetch("http://localhost:3000/api/user/update", {
@@ -24,11 +24,12 @@ export async function updateUserProfile(
       "Content-Type": "application/json",
       Authorization: token ? `Bearer ${token}` : "",
     },
-    body: JSON.stringify({ id, name, surname, telephone }),
+    body: JSON.stringify({ id, name, surname, telephone, role }), 
   });
   if (!res.ok) throw new Error("Failed to update user");
   return await res.json();
 }
+
 
 export async function userRemove(id: string) {
   const token = localStorage.getItem("authToken");

@@ -19,6 +19,9 @@
   --font-mono: var(--font-geist-mono);
 }
 
+select {
+  appearance: none;
+}
 
 body {
   background: var(--background);
@@ -29,3 +32,4 @@ body {
 /* .slot-background{
   background: radial-gradient(1200px 600px at 50% -20%, #493b443c 0%, #7ffa640d 55%, #ffffff5c 100%);
 } */
+

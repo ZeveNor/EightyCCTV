@@ -6,6 +6,7 @@ import NavbarComponent from "@/navbar/navbar";
 import ParkingSlot from "@/parking-slot/parking-slot";
 import SlotHistory from "@/slot-history/slot-history";
 import MembersManagement from "./members/members-management";
+import MyCars from "./members/Mycars";
 import PlateHistory from "./car-plate/plate";
 import PlateSearchMember from "./car-plate/search-member";
 
@@ -15,7 +16,7 @@ import MemberSidebar from "@/navbar/navbars/member";
 import VideoRecordSidebar from "@/navbar/navbars/videorecord";
 
 import MJPEGViewer from "@/StreamVideo/stream";
-
+import { jwtDecode } from "jwt-decode";
 import "../navbar/nav-mobile.css";
 
 const MENU = {
@@ -31,15 +32,27 @@ const MENU = {
 
   WATCH_RECORDS: "Watch Records",
 };
-
+interface TokenPayload {
+  id: number; 
+  role: string;
+}
 export default function Home() {
   const router = useRouter();
   const [selectedMenu, setSelectedMenu] = useState(MENU.INTERACTIVE_MAP);
-  const [cameraUrl, setCameraUrl] = useState("ws://localhost:3000/ws/rtsp"); 
-
+  const [cameraUrl, setCameraUrl] = useState("ws://localhost:3000/ws/rtsp");
+  const [userId, setUserId] = useState<number | null>(null);
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (!token) {
+      router.replace("/");
+      return;
+    }
+
+    try {
+      const decoded = jwtDecode<TokenPayload>(token);
+      setUserId(decoded.id); 
+    } catch (err) {
+      console.error("Invalid token", err);
       router.replace("/");
     }
   }, [router]);
@@ -81,8 +94,14 @@ export default function Home() {
               <PlateHistory />
             </div>
           }
+
+          {selectedMenu === MENU.EDIT_MEMBER && userId !== null && (
+            <div>
+              <MyCars userId={userId} />
+            </div>
+          )}
+
           {selectedMenu === MENU.MANAGE_MEMBER && <div><MembersManagement/></div>}
-          {selectedMenu === MENU.EDIT_MEMBER && <div>Edit Member Content</div>}
           {selectedMenu === MENU.MEMBER_HISTORY && <div>Member History Content</div>}
 
           {selectedMenu === MENU.WATCH_RECORDS &&
@@ -118,19 +137,19 @@ export default function Home() {
 function SideMenuList({ selectedMenu, setSelectedMenu }: { selectedMenu: string, setSelectedMenu: (menu: string) => void }) {
   return (
     <div>
-      
+
       {/* Desktop Responsive */}
       <div className="overflow-y-auto md:block hidden" style={{ height: "calc(90vh - 64px)" }}>
         <ul className="menu rounded-box w-56 gap-2 ">
 
           {/* Parking Slot */}
           <ParkingSlotSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
-          
+
           {/* Car Plates */}
-          <CarPlateSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu}/>
-          
+          <CarPlateSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+
           {/* Members */}
-          <MemberSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu}/>
+          <MemberSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
 
           {/* Video Records */}
           <VideoRecordSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
