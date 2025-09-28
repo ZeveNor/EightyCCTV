@@ -5,8 +5,11 @@ import ParkingSlotSidebar from "@/navbar/navbars/parkingslot";
 import CarPlateSidebar from "@/navbar/navbars/carparking";
 import MemberSidebar from "@/navbar/navbars/member";
 import VideoRecordSidebar from "@/navbar/navbars/videorecord";
+import ProfilePage from "./profile";
 import "./nav-mobile.css";
-
+import {
+  getUserAvatar,
+} from "@/api/profile";
 const MENU = {
   INTERACTIVE_MAP: "Interactive Map",
   PARKING_HISTORY: "Parking History",
@@ -21,27 +24,29 @@ const MENU = {
   WATCH_RECORDS: "Watch Records",
 };
 
-export default function NavbarComponent() { 
+export default function NavbarComponent() {
   return (
     <div className="navbar bg-white shadow-lg">
-      
       {/* navbar left */}
       <div className="navbar-start">
         <a className="font-bold text-xl ml-5">80 CCTV</a>
       </div>
-      
       {/* navbar center */}
-      <div className="navbar-center">
-      </div>
-
+      <div className="navbar-center"></div>
       {/* navbar right */}
-      <div className="navbar-end"> 
+      <div className="navbar-end flex items-center gap-2">
         <NavbarMonbile />
         <Profile />
-      </div>
+        {/* ปุ่มใหม่ */}
+        <a
 
+          className="btn btn-outline btn-sm ml-2"
+        >
+          My Profile
+        </a>
+      </div>
     </div>
-  )
+  );
 }
 
 export function NavbarMonbile() {
@@ -50,7 +55,7 @@ export function NavbarMonbile() {
     <div id="nav-mb" className="md:hidden block">
       <div className="drawer">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-        
+
         <div className="drawer-content ">
           <label htmlFor="my-drawer" className="btn drawer-button border-0" style={{ backgroundColor: "white" }}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block h-5 w-5 stroke-current">
@@ -90,28 +95,48 @@ export function NavbarMonbile() {
 
 // Profile Component |
 export function Profile() {
+
+  const [avatar, setAvatar] = useState<string>("");
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  async function fetchUser() {
+    try {
+      const avatarData = await getUserAvatar();
+      if (avatarData.status === 200) {
+        setAvatar(avatarData.result.avatar_url);
+      }
+    } catch (err) {
+      console.error("Error fetching user", err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="dropdown dropdown-end ml-2 z-100">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-6 rounded-full">
           <img
-            alt="Tailwind CSS Navbar component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+            src={avatar || "/default-avatar.png"}
+            alt="Profile Avatar"
+          />
         </div>
       </div>
       <ul
         tabIndex={0}
         className="menu menu-sm dropdown-content bg-white rounded-box z-1 mt-3 w-52 p-2 shadow">
         <li>
-          <a className="justify-between">
-            Profile
-          </a>
+          <a href="/profile">My Profile</a>
         </li>
-        <li><a>Settings</a></li>
+
         <li>
           <a onClick={() => {
-              localStorage.removeItem("authToken");
-              window.location.href = "/login";
+            localStorage.removeItem("authToken");
+            window.location.href = "/login";
           }}>Logout
           </a>
         </li>

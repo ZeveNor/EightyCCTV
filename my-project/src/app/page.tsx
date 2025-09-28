@@ -8,6 +8,7 @@ import SlotHistory from "@/slot-history/slot-history";
 import MembersManagement from "./members/members-management";
 import MyCars from "./members/Mycars";
 import AdminVehicles from "./CarPlates/AdminVehicles";
+import ProfilePage from "@/navbar/profile";
 
 import ParkingSlotSidebar from "@/navbar/navbars/parkingslot";
 import CarPlateSidebar from "@/navbar/navbars/carparking";
@@ -21,13 +22,13 @@ import "../navbar/nav-mobile.css";
 const MENU = {
   INTERACTIVE_MAP: "Interactive Map",
   PARKING_HISTORY: "Parking History",
-  SEARCH_PLATE: "Search Plate",
-  SEARCH_MEMBER: "Search Member",
+ 
+  SEARCH_MEMBER: "Search Member Cars",
   CREATE_GUEST_PLATE: "Create Guest Plate",
   CAR_HISTORY: "Car Plate History",
 
   MANAGE_MEMBER: "Manage Member",
-  EDIT_MEMBER: "Edit Member",
+  MY_CARS: "User's Cars",
   MEMBER_HISTORY: "Member History",
 
   WATCH_RECORDS: "Watch Records",
@@ -85,24 +86,22 @@ export default function Home() {
               <SlotHistory />
             </div>
           }
-          {selectedMenu === MENU.SEARCH_PLATE &&
-            <div>Parking History Content</div>
-          }
+
           {selectedMenu === MENU.SEARCH_MEMBER && userId !== null && (
             <div>
               <AdminVehicles/>
             </div>
           )}
-          {selectedMenu === MENU.CREATE_GUEST_PLATE && <div>Create Guest Plate Content</div>}
-          {selectedMenu === MENU.CAR_HISTORY && <div>Car Plate History Content</div>}
-
+          {selectedMenu === MENU.CAR_HISTORY && userId !== null && 
+          <div>
+            ALL Car History Content
+            </div>}
           {selectedMenu === MENU.MANAGE_MEMBER && <div><MembersManagement /></div>}
-          {selectedMenu === MENU.EDIT_MEMBER && userId !== null && (
+          {selectedMenu === MENU.MY_CARS && userId !== null && (
             <div>
               <MyCars userId={userId} />
             </div>
           )}
-
           {selectedMenu === MENU.MEMBER_HISTORY && <div>Member History Content</div>}
 
           {selectedMenu === MENU.WATCH_RECORDS &&
