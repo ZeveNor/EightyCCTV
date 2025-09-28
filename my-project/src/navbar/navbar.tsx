@@ -37,13 +37,7 @@ export default function NavbarComponent() {
       <div className="navbar-end flex items-center gap-2">
         <NavbarMonbile />
         <Profile />
-        {/* ปุ่มใหม่ */}
-        <a
 
-          className="btn btn-outline btn-sm ml-2"
-        >
-          My Profile
-        </a>
       </div>
     </div>
   );
