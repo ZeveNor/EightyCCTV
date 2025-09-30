@@ -108,7 +108,11 @@ export default function Home() {
             </div>
           )}
 
-          {selectedMenu === MENU.MANAGE_MEMBER && <div><MembersManagement/></div>}
+          {selectedMenu === MENU.MANAGE_MEMBER &&
+            <div>
+              <MembersManagement />
+            </div>}
+          {/* TODO */}
           {selectedMenu === MENU.MEMBER_HISTORY && <div>Member History Content</div>}
 
           {selectedMenu === MENU.WATCH_RECORDS &&
