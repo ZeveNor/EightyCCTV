@@ -12,7 +12,6 @@ export default function CarPlateSidebar(
       <details>
         <summary className="text-lg">Car Plates</summary>
         <ul className="text-md">
-
           <li>
             <button
               onClick={() => setSelectedMenu(MENU.SEARCH_MEMBER)}

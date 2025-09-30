@@ -7,12 +7,10 @@ import MemberSidebar from "@/navbar/navbars/member";
 import VideoRecordSidebar from "@/navbar/navbars/videorecord";
 import "./nav-mobile.css";
 
-const MENU = {
+const DEFAULT_MENU = {
   INTERACTIVE_MAP: "Interactive Map",
   PARKING_HISTORY: "Parking History",
-  SEARCH_PLATE: "Search Plate",
   SEARCH_MEMBER: "Search Member",
-  CREATE_GUEST_PLATE: "Create Guest Plate",
   CAR_HISTORY: "Car Plate History",
   ADD_MEMBER: "Add Member",
   EDIT_MEMBER: "Edit Member",
@@ -21,22 +19,30 @@ const MENU = {
   WATCH_RECORDS: "Watch Records",
 };
 
-export default function NavbarComponent() { 
+export default function NavbarComponent({
+  MENU = DEFAULT_MENU,
+  selectedMenu,
+  setSelectedMenu,
+}: {
+  MENU?: any;
+  selectedMenu?: string;
+  setSelectedMenu?: (menu: string) => void;
+}) {
   return (
     <div className="navbar bg-white shadow-lg">
-      
+
       {/* navbar left */}
       <div className="navbar-start">
         <a className="font-bold text-xl ml-5">80 CCTV</a>
       </div>
-      
+
       {/* navbar center */}
       <div className="navbar-center">
       </div>
 
       {/* navbar right */}
       <div className="navbar-end"> 
-        <NavbarMonbile />
+        <NavbarMonbile MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
         <Profile />
       </div>
 
@@ -44,8 +50,20 @@ export default function NavbarComponent() {
   )
 }
 
-export function NavbarMonbile() {
-  const [selectedMenu, setSelectedMenu] = useState(MENU.INTERACTIVE_MAP);
+export function NavbarMonbile({
+  MENU = DEFAULT_MENU,
+  selectedMenu: propSelectedMenu,
+  setSelectedMenu: propSetSelectedMenu,
+}: {
+  MENU?: any;
+  selectedMenu?: string;
+  setSelectedMenu?: (menu: string) => void;
+}) {
+  // if parent provided selection handlers (from page), use them — otherwise use local state
+  const [localSelectedMenu, setLocalSelectedMenu] = useState(MENU.INTERACTIVE_MAP);
+  const selectedMenu = propSelectedMenu ?? localSelectedMenu;
+  const setSelectedMenu = propSetSelectedMenu ?? setLocalSelectedMenu;
+
   return (
     <div id="nav-mb" className="md:hidden block">
       <div className="drawer">

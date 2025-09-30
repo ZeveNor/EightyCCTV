@@ -8,9 +8,10 @@ export function getHistory() {
     },
     cache: "no-store",
   })
-    .then((res) => {
+    .then(async (res) => {
       if (!res.ok) throw new Error("Failed to fetch slot history");
-      return res.json();
+      const data = await res.json();
+      return data;
     })
     .then((data) => data.result)
     .catch((err) => {
