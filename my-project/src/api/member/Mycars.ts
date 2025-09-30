@@ -8,7 +8,7 @@ interface VehicleInterface {
 
 export async function addMyVehicleById({ userId, plate, brand, model, color }: VehicleInterface) {
   const token = localStorage.getItem("authToken");
-  const res = await fetch("http://localhost:3000/api/vehicle/addMy", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/vehicle/addMy`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -38,18 +38,18 @@ interface UpdateVehicleInterface {
 
 export async function updateVehicles({ plate, newPlate, brand, model, color }: UpdateVehicleInterface) {
   const token = localStorage.getItem("authToken");
-  const res = await fetch("http://localhost:3000/api/vehicle/updatePlate", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/vehicle/updatePlate`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: token ? `Bearer ${token}` : "",
     },
-    body: JSON.stringify({ 
-      plate, 
-      new_plate: newPlate, 
-      brand, 
-      model, 
-      color 
+    body: JSON.stringify({
+      plate,
+      new_plate: newPlate,
+      brand,
+      model,
+      color
     }),
   });
 
@@ -59,36 +59,36 @@ export async function updateVehicles({ plate, newPlate, brand, model, color }: U
 
 
 export async function removeVehicles(plate: string) {
-    const token = localStorage.getItem("authToken");
-    const res = await fetch("http://localhost:3000/api/vehicle/removePlate", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: token ? `Bearer ${token}` : "",
-        },
-        body: JSON.stringify({ plate }),
-    });
-    if (!res.ok) throw new Error("Failed to remove vehicle");
-    return await res.json();
+  const token = localStorage.getItem("authToken");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/vehicle/removePlate`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token ? `Bearer ${token}` : "",
+    },
+    body: JSON.stringify({ plate }),
+  });
+  if (!res.ok) throw new Error("Failed to remove vehicle");
+  return await res.json();
 }
 
 export async function unremoveVehicles(plate: string) {
-    const token = localStorage.getItem("authToken");
-    const res = await fetch("http://localhost:3000/api/vehicle/unremovePlate", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: token ? `Bearer ${token}` : "",
-        },
-        body: JSON.stringify({ plate }),
-    });
-    if (!res.ok) throw new Error("Failed to unremove vehicle");
-    return await res.json();
+  const token = localStorage.getItem("authToken");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/vehicle/unremovePlate`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token ? `Bearer ${token}` : "",
+    },
+    body: JSON.stringify({ plate }),
+  });
+  if (!res.ok) throw new Error("Failed to unremove vehicle");
+  return await res.json();
 }
 
 export async function getVehiclesByUserId(userId: number) {
   const token = localStorage.getItem("authToken");
-  const res = await fetch(`http://localhost:3000/api/vehicle/my`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/vehicle/my`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: token ? `Bearer ${token}` : "",

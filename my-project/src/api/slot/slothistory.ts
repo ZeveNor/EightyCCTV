@@ -1,7 +1,7 @@
 export function getHistory() {
   const token = localStorage.getItem("authToken");
 
-  return fetch("http://localhost:3000/api/slots/log", {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/slots/log`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: token ? `Bearer ${token}` : "",

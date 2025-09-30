@@ -14,6 +14,14 @@ export default function CarPlateSidebar(
         <ul className="text-md">
           <li>
             <button
+              onClick={() => setSelectedMenu(MENU.CARPLATE_DETECTOR)}
+              className={selectedMenu === MENU.CARPLATE_DETECTOR ? "font-bold" : ""}
+            >
+              Carplate Detector
+            </button>
+          </li>
+          <li>
+            <button
               onClick={() => setSelectedMenu(MENU.SEARCH_MEMBER)}
               className={selectedMenu === MENU.SEARCH_MEMBER ? "font-bold" : ""}
             >

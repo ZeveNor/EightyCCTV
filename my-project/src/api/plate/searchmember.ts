@@ -1,7 +1,7 @@
 export function getSearchByOwner() {
   const token = localStorage.getItem("authToken");
 
-  return fetch("http://localhost:3000/api/vehicle/all", {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/vehicle/all`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: token ? `Bearer ${token}` : "",
@@ -22,7 +22,7 @@ export function getSearchByOwner() {
 export async function getUserInfo() {
   const token = localStorage.getItem("authToken");
 
-  return fetch("http://localhost:3000/api/user/list", {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/list`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: token ? `Bearer ${token}` : "",

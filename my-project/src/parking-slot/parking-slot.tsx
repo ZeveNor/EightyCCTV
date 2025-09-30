@@ -3,7 +3,7 @@ import "./parking.css";
 import "../navbar/nav-mobile.css";
 import { getSlotData } from "@/api/slot/slot";
 
-const POLL_URL = "http://localhost:3000/api/slots/status";
+const POLL_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/slots/status`;
 
 function idOf(r: string, c: number) {
   return `${r}${c}`;
