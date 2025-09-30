@@ -17,7 +17,7 @@ export default function CarPlateSidebar(
               onClick={() => setSelectedMenu(MENU.SEARCH_MEMBER)}
               className={selectedMenu === MENU.SEARCH_MEMBER ? "font-bold" : ""}
             >
-              Search Member
+              Cars Management
             </button>
           </li>
           <li>

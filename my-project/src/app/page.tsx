@@ -7,6 +7,7 @@ import ParkingSlot from "@/parking-slot/parking-slot";
 import SlotHistory from "@/slot-history/slot-history";
 import MembersManagement from "./members/members-management";
 import MyCars from "./members/Mycars";
+import AdminVehicles from "./CarPlates/AdminVehicles";
 import PlateHistory from "./car-plate/plate";
 import PlateSearchMember from "./car-plate/search-member";
 
