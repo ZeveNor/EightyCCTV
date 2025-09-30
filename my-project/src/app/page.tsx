@@ -19,8 +19,10 @@ import VideoRecordSidebar from "@/navbar/navbars/videorecord";
 import MJPEGViewer from "@/StreamVideo/stream";
 import { jwtDecode } from "jwt-decode";
 import "../navbar/nav-mobile.css";
+import CarPlateDetector from "./car-plate/car-plate-detector";
 
 const MENU = {
+  CARPLATE_DETECTOR: "Carplate Detector",
   INTERACTIVE_MAP: "Interactive Map",
   PARKING_HISTORY: "Parking History",
   SEARCH_MEMBER: "Search Member",
@@ -79,6 +81,10 @@ export default function Home() {
           {selectedMenu === MENU.INTERACTIVE_MAP &&
             <div className="slot-background pt-6 md:pl-6 pl-0 h-full overflow-hidden">
               <ParkingSlot />
+            </div>
+          }
+          {selectedMenu === MENU.CARPLATE_DETECTOR &&
+            <div> <CarPlateDetector />
             </div>
           }
           {selectedMenu === MENU.PARKING_HISTORY &&

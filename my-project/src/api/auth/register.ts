@@ -1,7 +1,7 @@
 
 export async function handleEmailVerify(email: string) {
   try {
-    const res = await fetch("http://localhost:3000/api/auth/send-otp", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-otp`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
@@ -16,7 +16,7 @@ export async function handleEmailVerify(email: string) {
 export async function handleOtpVerify(email: string, otp: string) {
   try {
 
-    const res = await fetch("http://localhost:3000/api/auth/verify-otp", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/verify-otp`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, otp_code: otp }),
@@ -44,7 +44,7 @@ export async function handleRegister(
   phoneNumber: string,
 ) {
   try {
-    const res = await fetch("http://localhost:3000/api/auth/register", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

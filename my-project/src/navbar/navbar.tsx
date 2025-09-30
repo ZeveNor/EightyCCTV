@@ -8,6 +8,7 @@ import VideoRecordSidebar from "@/navbar/navbars/videorecord";
 import "./nav-mobile.css";
 
 const DEFAULT_MENU = {
+  CARPLATE_DETECTOR: "Carplate Detector",
   INTERACTIVE_MAP: "Interactive Map",
   PARKING_HISTORY: "Parking History",
   SEARCH_MEMBER: "Search Member",
