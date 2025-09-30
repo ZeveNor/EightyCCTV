@@ -4,9 +4,10 @@ interface VehicleInterface {
   brand: string;
   model: string;
   color: string;
+  province: string;
 }
 
-export async function addMyVehicleById({ userId, plate, brand, model, color }: VehicleInterface) {
+export async function addMyVehicleById({ userId, plate, brand, model, color, province }: VehicleInterface & { province: string }) {
   const token = localStorage.getItem("authToken");
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/vehicle/addMy`, {
     method: "POST",
@@ -20,12 +21,13 @@ export async function addMyVehicleById({ userId, plate, brand, model, color }: V
       brand,
       model,
       color,
+      province, 
     }),
   });
-
   if (!res.ok) throw new Error("Failed to add vehicle");
   return await res.json();
 }
+
 
 
 interface UpdateVehicleInterface {
@@ -34,9 +36,10 @@ interface UpdateVehicleInterface {
   brand: string;
   model: string;
   color: string;
+  province: string;
 }
 
-export async function updateVehicles({ plate, newPlate, brand, model, color }: UpdateVehicleInterface) {
+export async function updateVehicles({ plate, newPlate, brand, model, color, province }: UpdateVehicleInterface & { province: string }) {
   const token = localStorage.getItem("authToken");
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/vehicle/updatePlate`, {
     method: "POST",
@@ -44,15 +47,15 @@ export async function updateVehicles({ plate, newPlate, brand, model, color }: U
       "Content-Type": "application/json",
       Authorization: token ? `Bearer ${token}` : "",
     },
-    body: JSON.stringify({
-      plate,
-      new_plate: newPlate,
-      brand,
-      model,
-      color
+    body: JSON.stringify({ 
+      plate, 
+      new_plate: newPlate, 
+      brand, 
+      model, 
+      color,
+      province, // ✅ เพิ่ม
     }),
   });
-
   if (!res.ok) throw new Error("Failed to update vehicle");
   return await res.json();
 }
