@@ -38,10 +38,9 @@ export default function RegisterPage() {
 
   async function handleVerifyCode() {
     
-    if(otp.length === 6){
-      console.log("clicked");
+    if (otp.length === 6) {
+      console.debug("[register] verifying OTP for", email);
       const res = await handleOtpVerify(email, otp);
-      console.log(res);
       // handleOtpVerify should return a numeric status or boolean
       // If the API returned an object, normalize it here.
       const status = typeof res === "object" && res !== null ? res.status ?? res.result?.status ?? res.result ?? res : res;

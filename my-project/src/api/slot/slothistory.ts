@@ -1,16 +1,17 @@
 export function getHistory() {
   const token = localStorage.getItem("authToken");
 
-  return fetch("http://localhost:3000/api/slots/log", {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/slots/log`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: token ? `Bearer ${token}` : "",
     },
     cache: "no-store",
   })
-    .then((res) => {
+    .then(async (res) => {
       if (!res.ok) throw new Error("Failed to fetch slot history");
-      return res.json();
+      const data = await res.json();
+      return data;
     })
     .then((data) => data.result)
     .catch((err) => {

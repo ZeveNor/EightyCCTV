@@ -34,7 +34,6 @@ export async function updateUserProfile(formData: {
   telephone?: string;
 }) {
   const token = localStorage.getItem("authToken");
-  
   const res = await fetch("http://localhost:3000/api/user/updateProfile", {
     method: "POST",
     headers: {

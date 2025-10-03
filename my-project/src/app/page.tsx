@@ -9,6 +9,8 @@ import MembersManagement from "./members/members-management";
 import MyCars from "./members/Mycars";
 import AdminVehicles from "./CarPlates/AdminVehicles";
 import ProfilePage from "@/navbar/profile";
+import PlateHistory from "./car-plate/plate";
+import PlateSearchMember from "./car-plate/search-member";
 
 import ParkingSlotSidebar from "@/navbar/navbars/parkingslot";
 import CarPlateSidebar from "@/navbar/navbars/carparking";
@@ -18,12 +20,15 @@ import VideoRecordSidebar from "@/navbar/navbars/videorecord";
 import MJPEGViewer from "@/StreamVideo/stream";
 import { jwtDecode } from "jwt-decode";
 import "../navbar/nav-mobile.css";
+import CarPlateDetector from "./car-plate/car-plate-detector";
 
 const MENU = {
+  CARPLATE_DETECTOR: "Carplate Detector",
   INTERACTIVE_MAP: "Interactive Map",
   PARKING_HISTORY: "Parking History",
- 
+
   SEARCH_MEMBER: "Search Member Cars",
+
   CREATE_GUEST_PLATE: "Create Guest Plate",
   CAR_HISTORY: "Car Plate History",
 
@@ -62,7 +67,7 @@ export default function Home() {
     <div className="h-dvh flex flex-col border">
       {/* navbar top */}
       <div className="min-h-16 z-100">
-        <NavbarComponent />
+        <NavbarComponent MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
       </div>
 
       {/* content bottom */}
@@ -81,6 +86,10 @@ export default function Home() {
               <ParkingSlot />
             </div>
           }
+          {selectedMenu === MENU.CARPLATE_DETECTOR &&
+            <div> <CarPlateDetector />
+            </div>
+          }
           {selectedMenu === MENU.PARKING_HISTORY &&
             <div>
               <SlotHistory />
@@ -89,7 +98,7 @@ export default function Home() {
 
           {selectedMenu === MENU.SEARCH_MEMBER && userId !== null && (
             <div>
-              <AdminVehicles/>
+              <PlateHistory />
             </div>
           )}
           {selectedMenu === MENU.CAR_HISTORY && userId !== null && 
