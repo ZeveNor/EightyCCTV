@@ -95,8 +95,10 @@ export default function Home() {
               <SlotHistory />
             </div>
           }
-
-          {selectedMenu === MENU.SEARCH_MEMBER && userId !== null && (
+          {selectedMenu === MENU.SEARCH_MEMBER &&
+            <div>
+            </div>}
+          {selectedMenu === MENU.CAR_HISTORY &&
             <div>
               <PlateHistory />
             </div>
