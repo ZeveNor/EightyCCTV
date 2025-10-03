@@ -94,7 +94,6 @@ export default function Home() {
           }
           {selectedMenu === MENU.SEARCH_MEMBER &&
             <div>
-            <PlateSearchMember />
             </div>}
           {selectedMenu === MENU.CAR_HISTORY &&
             <div>
