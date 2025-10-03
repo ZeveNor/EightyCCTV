@@ -130,17 +130,21 @@ export default function MyCars({ userId }: { userId: number }) {
         const row = target.closest("tr");
         if (!row) return;
 
+        // เพิ่ม input สำหรับแก้ไข plate
+        const plateCell = row.children[0] as HTMLElement;
         const provinceCell = row.children[1] as HTMLElement;
         const brandCell = row.children[2] as HTMLElement;
         const modelCell = row.children[3] as HTMLElement;
         const colorCell = row.children[4] as HTMLElement;
         const actionCell = row.children[6] as HTMLElement;
 
+        const currentPlate = plateCell.innerText;
         const currentProvince = provinceCell.innerText;
         const currentBrand = brandCell.innerText;
         const currentModel = modelCell.innerText;
         const currentColor = colorCell.innerText;
 
+        plateCell.innerHTML = `<input value="${currentPlate}" class="p-1 border rounded w-full"/>`;
         provinceCell.innerHTML = `<input value="${currentProvince}" class="p-1 border rounded w-full"/>`;
         brandCell.innerHTML = `<input value="${currentBrand}" class="p-1 border rounded w-full"/>`;
         modelCell.innerHTML = `<input value="${currentModel}" class="p-1 border rounded w-full"/>`;
@@ -159,12 +163,14 @@ export default function MyCars({ userId }: { userId: number }) {
         const row = target.closest("tr");
         if (!row) return;
 
+        // ดึงค่าใหม่จาก input
+        const newPlate = (row.children[0].querySelector("input") as HTMLInputElement).value;
         const province = (row.children[1].querySelector("input") as HTMLInputElement).value;
         const brand = (row.children[2].querySelector("input") as HTMLInputElement).value;
         const model = (row.children[3].querySelector("input") as HTMLInputElement).value;
         const color = (row.children[4].querySelector("input") as HTMLInputElement).value;
 
-        updateVehicles({ plate, newPlate: plate,province, brand, model, color })
+        updateVehicles({ plate, newPlate, province, brand, model, color })
           .then(() => fetchData())
           .catch((err) => console.error(err));
       }

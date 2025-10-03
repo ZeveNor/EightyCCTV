@@ -22,8 +22,8 @@ export default function MemberSidebar(
           </li>
           <li>
             <button
-              onClick={() => setSelectedMenu(MENU.EDIT_MEMBER)}
-              className={selectedMenu === MENU.EDIT_MEMBER ? "font-bold" : ""}
+              onClick={() => setSelectedMenu(MENU.MY_CARS)}
+              className={selectedMenu === MENU.MY_CARS ? "font-bold" : ""}
             >
               My Cars
             </button>
