@@ -28,7 +28,7 @@ const MENU = {
   CAR_HISTORY: "Car Plate History",
 
   MANAGE_MEMBER: "Manage Member",
-  MY_CARS: "User's Cars",
+  MY_CARS: "My Cars",
   MEMBER_HISTORY: "Member History",
 
   WATCH_RECORDS: "Watch Records",
@@ -94,12 +94,14 @@ export default function Home() {
           )}
           {selectedMenu === MENU.CAR_HISTORY && userId !== null && 
           <div>
-            ALL Car History Content
+            ALL Car History Content <ProfilePage/>
             </div>}
-          {selectedMenu === MENU.MANAGE_MEMBER && <div><MembersManagement /></div>}
+
+          {selectedMenu === MENU.MANAGE_MEMBER && userId !== null && <div><MembersManagement /></div>}
+          
           {selectedMenu === MENU.MY_CARS && userId !== null && (
             <div>
-              <MyCars userId={userId} />
+             <MyCars userId={userId} />
             </div>
           )}
           {selectedMenu === MENU.MEMBER_HISTORY && <div>Member History Content</div>}

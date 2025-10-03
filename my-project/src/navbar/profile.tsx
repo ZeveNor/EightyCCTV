@@ -89,7 +89,7 @@ export default function ProfilePage() {
         <input
           type="file"
           accept="image/png,image/jpeg"
-          className="mt-3"
+          className="mt-3 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer"
           onChange={handleUploadAvatar}
         />
       </div>
