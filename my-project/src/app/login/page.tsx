@@ -33,7 +33,7 @@ export default function LoginPage() {
         }}
       />
       <fieldset className="fieldset z-2 bg-white border-base-300 rounded-box w-xs border p-4 rounded-lg shadow-lg">
-        <legend className="fieldset-legend text-center" style={{fontSize:"40px", color: "#160d4eff"}}>EIGHTY CCTV</legend>
+        <legend className="fieldset-legend text-center" style={{fontSize:"40px", color: "#160d4eff"}}>ระบบจัดการลานจอดรถ</legend>
         <form onSubmit={handleLogin}>
           <label className="label">อีเมล</label>
           <div className="mb-4">

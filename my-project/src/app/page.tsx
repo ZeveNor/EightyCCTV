@@ -8,6 +8,7 @@ import SlotHistory from "@/slot-history/slot-history";
 import MembersManagement from "./members/members-management";
 import MyCars from "./members/Mycars";
 import AdminVehicles from "./CarPlates/AdminVehicles";
+import ProfilePage from "@/navbar/profile";
 import PlateHistory from "./car-plate/plate";
 import PlateSearchMember from "./car-plate/search-member";
 
@@ -25,12 +26,15 @@ const MENU = {
   CARPLATE_DETECTOR: "Carplate Detector",
   INTERACTIVE_MAP: "Interactive Map",
   PARKING_HISTORY: "Parking History",
-  SEARCH_MEMBER: "Search Member",
+
+  SEARCH_MEMBER: "Search Member Cars",
+
   CREATE_GUEST_PLATE: "Create Guest Plate",
+  CAR_MANAGEMENT: "Car Management",
   CAR_HISTORY: "Car Plate History",
 
   MANAGE_MEMBER: "Manage Member",
-  EDIT_MEMBER: "Edit Member",
+  MY_CARS: "My Cars",
   MEMBER_HISTORY: "Member History",
 
   WATCH_RECORDS: "Watch Records",
@@ -64,7 +68,7 @@ export default function Home() {
     <div className="h-dvh flex flex-col border">
       {/* navbar top */}
       <div className="min-h-16 z-100">
-        <NavbarComponent MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+        <NavbarComponent />
       </div>
 
       {/* content bottom */}
@@ -83,36 +87,39 @@ export default function Home() {
               <ParkingSlot />
             </div>
           }
-          {selectedMenu === MENU.CARPLATE_DETECTOR &&
-            <div> <CarPlateDetector />
-            </div>
-          }
           {selectedMenu === MENU.PARKING_HISTORY &&
             <div>
               <SlotHistory />
             </div>
           }
-          {selectedMenu === MENU.SEARCH_MEMBER &&
+          {selectedMenu === MENU.CARPLATE_DETECTOR &&
             <div>
-            <PlateSearchMember />
-            </div>}
-          {selectedMenu === MENU.CAR_HISTORY &&
+              <CarPlateDetector />
+            </div>
+          }
+          {selectedMenu === MENU.CAR_HISTORY && (
+            <div>
+              ว่าง
+            </div>
+          )}
+          {selectedMenu === MENU.CAR_MANAGEMENT && userId !== null && (
             <div>
               <PlateHistory />
             </div>
-          }
-
-          {selectedMenu === MENU.EDIT_MEMBER && userId !== null && (
+          )}
+          {selectedMenu === MENU.MY_CARS && userId !== null && (
             <div>
-              <MyCars userId={userId} />
+             <MyCars userId={userId} />
             </div>
           )}
+          {
+            selectedMenu === MENU.MANAGE_MEMBER && userId !== null && (
+              <div>
+                <MembersManagement />
+              </div>
+            )
+          }
 
-          {selectedMenu === MENU.MANAGE_MEMBER &&
-            <div>
-              <MembersManagement />
-            </div>}
-          {/* TODO */}
           {selectedMenu === MENU.MEMBER_HISTORY && <div>Member History Content</div>}
 
           {selectedMenu === MENU.WATCH_RECORDS &&

@@ -5,11 +5,12 @@ import ParkingSlotSidebar from "@/navbar/navbars/parkingslot";
 import CarPlateSidebar from "@/navbar/navbars/carparking";
 import MemberSidebar from "@/navbar/navbars/member";
 import VideoRecordSidebar from "@/navbar/navbars/videorecord";
+import ProfilePage from "./profile";
 import "./nav-mobile.css";
-import { getUserAvatar } from "@/api/profile";
-
-const DEFAULT_MENU = {
-  CARPLATE_DETECTOR: "Carplate Detector",
+import {
+  getUserAvatar,
+} from "@/api/profile";
+const MENU_CONST = {
   INTERACTIVE_MAP: "Interactive Map",
   PARKING_HISTORY: "Parking History",
   SEARCH_MEMBER: "Search Member",
@@ -21,39 +22,27 @@ const DEFAULT_MENU = {
   WATCH_RECORDS: "Watch Records",
 };
 
-export default function NavbarComponent({
-  MENU = DEFAULT_MENU,
-  selectedMenu,
-  setSelectedMenu,
-}: {
-  MENU?: any;
-  selectedMenu?: string;
-  setSelectedMenu?: (menu: string) => void;
-}) {
+export default function NavbarComponent() {
   return (
     <div className="navbar bg-white shadow-lg">
-
       {/* navbar left */}
       <div className="navbar-start">
-        <a className="font-bold text-xl ml-5">80 CCTV</a>
+        <a className="font-bold text-xl ml-5">ระบบจัดการลานจอดรถ</a>
       </div>
-
       {/* navbar center */}
-      <div className="navbar-center">
-      </div>
-
+      <div className="navbar-center"></div>
       {/* navbar right */}
-      <div className="navbar-end"> 
-        <NavbarMonbile MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+      <div className="navbar-end flex items-center gap-2">
+        <NavbarMonbile />
         <Profile />
-      </div>
 
+      </div>
     </div>
-  )
+  );
 }
 
 export function NavbarMonbile({
-  MENU = DEFAULT_MENU,
+  MENU = MENU_CONST,
   selectedMenu: propSelectedMenu,
   setSelectedMenu: propSetSelectedMenu,
 }: {
@@ -70,7 +59,7 @@ export function NavbarMonbile({
     <div id="nav-mb" className="md:hidden block">
       <div className="drawer">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-        
+
         <div className="drawer-content ">
           <label htmlFor="my-drawer" className="btn drawer-button border-0" style={{ backgroundColor: "white" }}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block h-5 w-5 stroke-current">
@@ -110,6 +99,7 @@ export function NavbarMonbile({
 
 // Profile Component |
 export function Profile() {
+
   const [avatar, setAvatar] = useState<string>("");
   const [loading, setLoading] = useState(true);
   
@@ -129,6 +119,7 @@ export function Profile() {
       setLoading(false);
     }
   }
+
   return (
     <div className="dropdown dropdown-end ml-2 z-100">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -143,17 +134,13 @@ export function Profile() {
         tabIndex={0}
         className="menu menu-sm dropdown-content bg-white rounded-box z-1 mt-3 w-52 p-2 shadow">
         <li>
-          <a onClick={() => {
-            window.location.href = "/profile";
-          }}  className="justify-between">
-            Profile
-          </a>
+          <a href="/profile">My Profile</a>
         </li>
-        {/* <li><a>Settings</a></li> */}
+
         <li>
           <a onClick={() => {
-              localStorage.removeItem("authToken");
-              window.location.href = "/login";
+            localStorage.removeItem("authToken");
+            window.location.href = "/login";
           }}>Logout
           </a>
         </li>
