@@ -22,18 +22,10 @@ export default function CarPlateSidebar(
           </li>
           <li>
             <button
-              onClick={() => setSelectedMenu(MENU.SEARCH_MEMBER)}
-              className={selectedMenu === MENU.SEARCH_MEMBER ? "font-bold" : ""}
+              onClick={() => setSelectedMenu(MENU.CAR_MANAGEMENT)}
+              className={selectedMenu === MENU.CAR_MANAGEMENT ? "font-bold" : ""}
             >
               Cars Management
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => setSelectedMenu(MENU.CAR_HISTORY)}
-              className={selectedMenu === MENU.CAR_HISTORY ? "font-bold" : ""}
-            >
-              History
             </button>
           </li>
         </ul>

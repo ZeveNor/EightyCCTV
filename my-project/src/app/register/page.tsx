@@ -65,7 +65,7 @@ export default function RegisterPage() {
       />
       <fieldset className="fieldset z-2 bg-white rounded-lg border-base-300 rounded-box w-xs border p-4">
         <legend className="fieldset-legend text-center" style={{ fontSize: "40px", color: "#160d4eff" }}>
-          EIGHTY CCTV
+          ระบบจัดการลานจอดรถ
         </legend>
         <form onSubmit={registerEvent}>
           <div className="mb-4">

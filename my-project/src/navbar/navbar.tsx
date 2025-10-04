@@ -10,7 +10,7 @@ import "./nav-mobile.css";
 import {
   getUserAvatar,
 } from "@/api/profile";
-const MENU = {
+const MENU_CONST = {
   INTERACTIVE_MAP: "Interactive Map",
   PARKING_HISTORY: "Parking History",
   SEARCH_MEMBER: "Search Member",
@@ -27,7 +27,7 @@ export default function NavbarComponent() {
     <div className="navbar bg-white shadow-lg">
       {/* navbar left */}
       <div className="navbar-start">
-        <a className="font-bold text-xl ml-5">80 CCTV</a>
+        <a className="font-bold text-xl ml-5">ระบบจัดการลานจอดรถ</a>
       </div>
       {/* navbar center */}
       <div className="navbar-center"></div>
@@ -42,7 +42,7 @@ export default function NavbarComponent() {
 }
 
 export function NavbarMonbile({
-  MENU = DEFAULT_MENU,
+  MENU = MENU_CONST,
   selectedMenu: propSelectedMenu,
   setSelectedMenu: propSetSelectedMenu,
 }: {
