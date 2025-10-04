@@ -86,7 +86,7 @@ export default function PlateHistory() {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Plate History</h2>
+      <h2 className="text-2xl font-bold mb-4">Car Management History</h2>
       <div className="mb-2">
         <input
           type="search"
