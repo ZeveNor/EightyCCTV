@@ -23,19 +23,45 @@ export default function MJPEGViewer({ url }: { url: string }) {
     return () => ws.close();
   }, [url]);
 
-  if (noSignal) {
-    return (
-      <div className="mockup-browser" style={{ backgroundColor: "rgba(0, 0, 0, 0.12)" }}>
-        <img alt="Camera not found" className="" />
-      </div>
-    );
-  }
 
   return (
-    <div className="pr-6">
-      <div className="mockup-browser grid place-content-center w-full" style={{ backgroundColor: "rgba(0, 0, 0, 0.12)" }}>
-        <img ref={imgRef} alt="Camera not found" className="" />
+    <div className="">
+      <RotateWarning />
+      <div className="mockup-browser md:pl-6 pl-0 place-content-center bg-white" >
+        <img className="md:w-[80vw] w-[80vw] md:h-[90vh] h-[70vh] bg-white" ref={imgRef} alt="กล้องวงจรปิดออฟไลน์" />
       </div>
+    </div>
+  );
+}
+
+export function RotateWarning() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    function checkOrientation() {
+      if (window.matchMedia("(orientation: portrait)").matches) {
+        setShow(true);
+      } else {
+        setShow(false);
+      }
+    }
+
+    checkOrientation();
+
+    window.addEventListener("resize", checkOrientation);
+    window.addEventListener("orientationchange", checkOrientation);
+
+    return () => {
+      window.removeEventListener("resize", checkOrientation);
+      window.removeEventListener("orientationchange", checkOrientation);
+    };
+  }, []);
+
+  if (!show) return null;
+
+  return (
+    <div className="fixed inset-0 z-90 flex items-center justify-center bg-black/80 text-white text-2xl text-center p-6">
+      กรุณาหมุนโทรศัพท์เป็นแนวนอน
     </div>
   );
 }

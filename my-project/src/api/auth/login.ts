@@ -1,5 +1,3 @@
-
-
 export async function handleLoginFunc(email: string, password: string) {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {

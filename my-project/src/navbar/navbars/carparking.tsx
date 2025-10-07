@@ -10,14 +10,14 @@ export default function CarPlateSidebar(
   return (
     <li>
       <details>
-        <summary className="text-lg">Car Plates</summary>
+        <summary className="text-lg">ระบบป้ายทะเบียน</summary>
         <ul className="text-md">
           <li>
             <button
               onClick={() => setSelectedMenu(MENU.CARPLATE_DETECTOR)}
               className={selectedMenu === MENU.CARPLATE_DETECTOR ? "font-bold" : ""}
             >
-              Carplate Detector
+              ตรวจจับป้ายทะเบียน
             </button>
           </li>
           <li>
@@ -25,7 +25,15 @@ export default function CarPlateSidebar(
               onClick={() => setSelectedMenu(MENU.CAR_MANAGEMENT)}
               className={selectedMenu === MENU.CAR_MANAGEMENT ? "font-bold" : ""}
             >
-              Cars Management
+              จัดการรถของสมาชิก
+            </button>
+          </li>
+           <li>
+            <button
+              onClick={() => setSelectedMenu(MENU.CARPLATE_HISTORY)}
+              className={selectedMenu === MENU.CARPLATE_HISTORY ? "font-bold" : ""}
+            >
+              ประวัติการเข้าออก
             </button>
           </li>
         </ul>

@@ -21,22 +21,23 @@ import MJPEGViewer from "@/StreamVideo/stream";
 import { jwtDecode } from "jwt-decode";
 import "../navbar/nav-mobile.css";
 import CarPlateDetector from "./car-plate/car-plate-detector";
+import MyPlateHistory from "./car-plate/mycar_histort";
+import CarPlateHistory from "./car-plate/car_history";
+import MemberUserSidebar from "@/navbar/navbars/memberuser";
+import ParkingSlotUserSidebar from "@/navbar/navbars/parkingslotuser";
+import { setDefaultResultOrder } from "dns";
 
 const MENU = {
-  CARPLATE_DETECTOR: "Carplate Detector",
   INTERACTIVE_MAP: "Interactive Map",
   PARKING_HISTORY: "Parking History",
-
-  SEARCH_MEMBER: "Search Member Cars",
-
+  CARPLATE_DETECTOR: "Carplate Detector",
+  CARPLATE_HISTORY: "Carplate History",
   CREATE_GUEST_PLATE: "Create Guest Plate",
   CAR_MANAGEMENT: "Car Management",
   CAR_HISTORY: "Car Plate History",
-
   MANAGE_MEMBER: "Manage Member",
   MY_CARS: "My Cars",
   MEMBER_HISTORY: "Member History",
-
   WATCH_RECORDS: "Watch Records",
 };
 interface TokenPayload {
@@ -48,16 +49,19 @@ export default function Home() {
   const [selectedMenu, setSelectedMenu] = useState(MENU.INTERACTIVE_MAP);
   const [cameraUrl, setCameraUrl] = useState("ws://localhost:3000/ws/rtsp");
   const [userId, setUserId] = useState<number | null>(null);
+  const [role, setRole] = useState<string | null>(null);
   useEffect(() => {
+    
     const token = localStorage.getItem("authToken");
     if (!token) {
-      router.replace("/");
+      router.replace("/login");
       return;
     }
-
+    
     try {
       const decoded = jwtDecode<TokenPayload>(token);
       setUserId(decoded.id); 
+      setRole(decoded.role);
     } catch (err) {
       console.error("Invalid token", err);
       router.replace("/");
@@ -68,7 +72,7 @@ export default function Home() {
     <div className="h-dvh flex flex-col border">
       {/* navbar top */}
       <div className="min-h-16 z-100">
-        <NavbarComponent />
+        <NavbarComponent selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
       </div>
 
       {/* content bottom */}
@@ -76,7 +80,26 @@ export default function Home() {
         <div id="nav-dt" className="md:min-w-65 w-0 flex-none h-full md:p-4" style={{ borderRight: "3px solid rgba(0, 0, 0, 0.12)" }}>
           <div className="flex flex-col justify-between h-full ">
             {/* flex top | show menu list */}
-            <SideMenuList selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+            {role === "admin" && (
+              <SideMenuList
+                selectedMenu={selectedMenu}
+                setSelectedMenu={setSelectedMenu}
+              />
+            )}
+
+            {role === "staff" && (
+              <SideMenuList
+                selectedMenu={selectedMenu}
+                setSelectedMenu={setSelectedMenu}
+              />
+            )}
+
+            {role === "user" && (
+              <SideMenuListUser
+                selectedMenu={selectedMenu}
+                setSelectedMenu={setSelectedMenu}
+              />
+            )}
           </div>
         </div>
 
@@ -99,12 +122,17 @@ export default function Home() {
           }
           {selectedMenu === MENU.CAR_HISTORY && (
             <div>
-              ว่าง
+              <PlateHistory />
             </div>
           )}
-          {selectedMenu === MENU.CAR_MANAGEMENT && userId !== null && (
+          {selectedMenu === MENU.CAR_MANAGEMENT && role !== null && (
             <div>
-              <PlateHistory />
+              <AdminVehicles role={role} />
+            </div>
+          )}
+          {selectedMenu === MENU.CARPLATE_HISTORY && userId !== null && (
+            <div>
+              <CarPlateHistory />
             </div>
           )}
           {selectedMenu === MENU.MY_CARS && userId !== null && (
@@ -113,31 +141,35 @@ export default function Home() {
             </div>
           )}
           {
-            selectedMenu === MENU.MANAGE_MEMBER && userId !== null && (
+            selectedMenu === MENU.MANAGE_MEMBER && role!== null && (
               <div>
-                <MembersManagement />
+                <MembersManagement role={role} />
               </div>
             )
           }
 
-          {selectedMenu === MENU.MEMBER_HISTORY && <div>Member History Content</div>}
+          {selectedMenu === MENU.MEMBER_HISTORY && userId !== null && (
+            <div>
+              <MyPlateHistory  userId={userId}/>
+            </div>
+          )}
 
           {selectedMenu === MENU.WATCH_RECORDS &&
-            <div className="pt-6 pl-6">
+            <div className="pt-6 md:pl-0 pl-6">
               <div className="flex flex-row gap-5">
-                <h2 className="text-lg font-bold mb-4">Watch Records</h2>
+                <h2 className="text-lg font-bold mb-4 pl-6">สตรีมภาพจากกล้องวงจรปิด</h2>
                 <div className="flex flex-row gap-2">
                   <button
                     className={`btn btn-sm ${cameraUrl === "ws://localhost:3000/ws/rtsp" ? "btn-active btn-neutral" : ""}`}
                     onClick={() => setCameraUrl("ws://localhost:3000/ws/rtsp")}
                   >
-                    Main Camera
+                    กล้องตรวจจับป้ายทะเบียน
                   </button>
                   <button
                     className={`btn btn-sm ${cameraUrl === "ws://localhost:3000/ws/rtsp2" ? "btn-active btn-neutral" : ""}`}
                     onClick={() => setCameraUrl("ws://localhost:3000/ws/rtsp2")}
                   >
-                    Parking Camera
+                    กล้องตรวจจับลานจอดรถ
                   </button>
                 </div>
               </div>
@@ -151,6 +183,24 @@ export default function Home() {
     </div>
   );
 }
+
+function SideMenuListUser({ selectedMenu, setSelectedMenu }: { selectedMenu: string, setSelectedMenu: (menu: string) => void }) {
+  return (
+    <div>
+
+      {/* Desktop Responsive */}
+      <div className="overflow-y-auto md:block hidden" style={{ height: "calc(90vh - 64px)" }}>
+        <ul className="menu rounded-box w-56 gap-2 ">
+          {/* Parking Slot */}
+          <ParkingSlotUserSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+          {/* Members */}
+          <MemberUserSidebar MENU={MENU} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+        </ul>
+      </div>
+    </div>
+  );
+}
+
 
 function SideMenuList({ selectedMenu, setSelectedMenu }: { selectedMenu: string, setSelectedMenu: (menu: string) => void }) {
   return (
@@ -174,15 +224,6 @@ function SideMenuList({ selectedMenu, setSelectedMenu }: { selectedMenu: string,
 
         </ul>
       </div>
-    </div>
-  );
-}
-
-export function SlotAvailableProgress() {
-  return (
-    <div>
-      <progress className="progress w-full" value="70" max="100"></progress>
-      <div className="text-sm font-bold text-center">Available 70 / 100</div>
     </div>
   );
 }

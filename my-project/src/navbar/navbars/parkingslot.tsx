@@ -11,14 +11,14 @@ export default function ParkingSlotSidebar(
   return (
     <li>
       <details open>
-        <summary className="text-lg">Parking Slots</summary>
+        <summary className="text-lg">ระบบลานจอดรถ</summary>
         <ul className="text-md">
           <li>
             <button
               onClick={() => setSelectedMenu(MENU.INTERACTIVE_MAP)}
               className={selectedMenu === MENU.INTERACTIVE_MAP ? "font-bold" : ""}
             >
-              Interactive Map
+              แผนผังลานจอดรถ
             </button>
           </li>
           <li>
@@ -26,7 +26,7 @@ export default function ParkingSlotSidebar(
               onClick={() => setSelectedMenu(MENU.PARKING_HISTORY)}
               className={selectedMenu === MENU.PARKING_HISTORY ? "font-bold" : ""}
             >
-              History
+              ประวัติการจอดรถ
             </button>
           </li>
         </ul>

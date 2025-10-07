@@ -67,15 +67,16 @@ export default function SlotHistory() {
     });
 
     gridRef.current = new Grid({
-      columns: ["Time", "Slot Name", "Status"],
+      columns: ["เวลา", "ตำแหน่งช่องจอด", "สถานะ"],
       data: filtered.map((item: any) => [
         new Date(item.changed_at).toLocaleString(),
         item.slot_name,
-        item.is_parked ? "Yes" : "No",
+        item.is_parked ? "ว่าง" : "ไม่ว่าง",
       ]),
       style: {
         table: {
           "font-size": "13px",
+          "text-align": "center"
         },
       },
       pagination: {
@@ -85,6 +86,20 @@ export default function SlotHistory() {
       search: false,
       sort: true,
       resizable: true,
+      language: {
+        'search': {
+          'placeholder': 'พิมพ์คำค้นหา...'
+        },
+        loading: "กำลังโหลด...",
+        noRecordsFound: "ไม่พบข้อมูลที่ตรงกัน",
+        'pagination': {
+          'previous': 'ก่อนหน้า',
+          'next': 'ถัดไป',
+          'showing': 'หน้า',
+          'to': 'แสดง',
+          'results': () => 'รายการ'
+        }
+      }
     });
 
     gridRef.current.render(container!);
@@ -92,13 +107,13 @@ export default function SlotHistory() {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Slot History</h2>
+      <h2 className="text-2xl font-bold mb-4">ประวัติการจอดรถ</h2>
       <div className="mb-2">
         <input
           type="search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Type a keyword..."
+          placeholder="พิมพ์คำค้นหา..."
           className="rounded px-2 py-1 w-70 max-w-md gridjs-input"
         />
       </div>

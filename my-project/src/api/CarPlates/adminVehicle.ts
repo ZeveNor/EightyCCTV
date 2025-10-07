@@ -8,6 +8,7 @@ export async function getAllVehicles() {
         cache: "no-store",
     });
 
+
     if (!res.ok) throw new Error("Failed to fetch vehicles");
 
     const data = await res.json();
@@ -33,8 +34,8 @@ export async function addVehicles(vehicle: {
         },
         body: JSON.stringify(vehicle),
     });
-  if (!res.ok) throw new Error("Failed to add vehicle");
-  return await res.json();
+    if (!res.ok) throw new Error("Failed to add vehicle");
+    return await res.json();
 }
 
 interface UpdateVehicleInterface {
@@ -59,7 +60,7 @@ export async function updateVehicles({ plate, newPlate, brand, model, color, pro
             brand,
             model,
             color,
-            province, 
+            province,
         }),
     });
     if (!res.ok) throw new Error("Failed to update vehicle");

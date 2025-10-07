@@ -18,3 +18,25 @@ export function getHistory() {
       return [];
     });
 }
+
+export function getHistoryByUserId(userId: number) {
+  const token = localStorage.getItem("authToken");
+
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/entry/vehicle/byUserId`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token ? `Bearer ${token}` : "",
+      body: JSON.stringify({ userId }),
+    },
+    cache: "no-store",
+  })
+    .then(async (res) => {
+      if (!res.ok) throw new Error("Failed to fetch plate history by user ID");
+      const data = await res.json();
+      return data.result?.result?.result || [];
+    })
+    .catch((err) => {
+      console.error("Error fetching plate history by user ID:", err);
+      return [];
+    });
+}
