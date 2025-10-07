@@ -82,7 +82,7 @@ export default function ProfilePage() {
       {/* Avatar */}
       <div className="flex flex-col items-center mb-6">
         <img
-          src={avatar || "/default-avatar.png"}
+          src={avatar || "https://static.vecteezy.com/system/resources/previews/024/983/914/large_2x/simple-user-default-icon-free-png.png"}
           alt="Profile Avatar"
           className="w-32 h-32 rounded-full object-cover border"
         />

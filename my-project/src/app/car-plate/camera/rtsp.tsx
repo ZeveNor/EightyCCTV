@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const url = "ws://localhost:3000/ws/rtsp";
+const url = "ws://localhost:3000/ws/rtsp2";
 
 export default function RtspMode() {
   const [plates, setPlates] = useState<string[]>([]);
@@ -43,10 +43,10 @@ export default function RtspMode() {
       </div>
 
       <div className="text-center mt-3">
-        <h2 className="text-md font-bold mb-2">Detected Plates</h2>
+        <h2 className="text-md font-bold mb-2">ผลลัพธ์</h2>
         <div className="border text-left border-gray-300 rounded-lg p-2 w-96 overflow-y-auto">
           <p className="text-gray-400">
-            ${plates.length > 0 ? plates.join(", ") : "No plates detected yet."}
+            {plates.length > 0 ? plates.join(", ") : "ยังไม่พบป้ายทะเบียน"}
           </p>
         </div>
       </div>

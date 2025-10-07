@@ -75,7 +75,7 @@ export default function RegisterPage() {
                 type="text"
                 required
                 placeholder="ชื่อ"
-                pattern="^[A-Za-zก-๙]+$"
+                pattern="^[A-Za-zก-ฮ]+$"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 title="Only letters"
@@ -89,7 +89,7 @@ export default function RegisterPage() {
                 type="text"
                 required
                 placeholder="นามสกุล"
-                pattern="^[A-Za-zก-๙]+$"
+                pattern="^[A-Za-zก-ฮ]+$"
                 value={surname}
                 onChange={(e) => setSurName(e.target.value)}
                 title="Only letters"
@@ -126,15 +126,15 @@ export default function RegisterPage() {
                 pattern="[0-9]*"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                minLength={10}
+                minLength={9}
                 maxLength={10}
                 title="Must be 10 digits"
               />
             </label>
-            <p className="validator-hint">Must be 10 digits</p>
+            <p className="validator-hint">Must be 9-10 digits</p>
           </div>
 
-          <div>
+          <div className="mt-4">
             <label className="input validator floating-label">
               <svg
                 className="h-[1em] opacity-50"
@@ -172,20 +172,35 @@ export default function RegisterPage() {
             </p>
           </div>
 
-          <div className="mb-4">
-            <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+          <div className="mb-4 mt-5">
+            <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border ">
               <legend className="fieldset-legend">ยืนยันอีเมลมหาลัย</legend>
-              <div className="join floating-label validator ">
+              <div>
+              <label className="input validator floating-label">
+                <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <g
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                    stroke-width="2.5"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                  </g>
+                </svg>
                 <span>กรอกอีเมลมหาวิทยาลัย แล้วกดยืนยัน</span>
                 <input
-                  className="input join-item validator" 
                   type="email"
                   placeholder="example@mail.rmutk.ac.th"
+                  pattern="^[a-zA-Z0-9._%+-]+@mail\.rmutk\.ac\.th$"
+                  title="Email must be in the format example@mail.rmutk.ac.th"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  required
                 />
-              </div>
+              </label>
+              <p className="validator-hint">Email must be in the format example@mail.rmutk.ac.th</p>
+            </div>
               <div className="validator-hint hidden">Enter valid email address</div>
               <label className="label text-neutral">รหัสยืนยัน
                 <input
@@ -234,6 +249,7 @@ export default function RegisterPage() {
           <a href="/login" className="link mt-4 block text-center">Already have an account? Login</a>
         </form>
       </fieldset>
+      
     </div>
   );
 }

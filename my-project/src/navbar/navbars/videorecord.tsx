@@ -10,14 +10,14 @@ export default function VideoRecordSidebar(
   return (
     <li>
       <details open>
-        <summary className="text-lg">Video Record</summary>
+        <summary className="text-lg">ระบบกล้องวงจรปิด</summary>
         <ul className="text-md">
           <li>
             <button
               onClick={() => setSelectedMenu(MENU.WATCH_RECORDS)}
               className={selectedMenu === MENU.WATCH_RECORDS ? "font-bold" : ""}
             >
-              Watch Records<span className="badge badge-soft badge-error">Live</span>
+              สตรีมภาพกล้องวงจรปิด
             </button>
           </li>
         </ul>

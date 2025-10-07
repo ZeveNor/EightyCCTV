@@ -46,7 +46,7 @@ export default function CameraMode() {
       // start capture every 5 sec
       intervalRef.current = setInterval(() => {
         captureFrame();
-      }, 5000);
+      }, 3000);
       setIsCapturing(true);
       console.log("▶️ Capture started");
     }
@@ -94,7 +94,7 @@ export default function CameraMode() {
     <div className="flex flex-col items-center space-y-4 p-6">
       <h1 className="text-2xl font-bold">Car Plate Detector</h1>
       <p className="text-gray-500">
-        Toggle capture to send frames to API every 10 seconds
+        Toggle capture to send frames to API every 4 seconds
       </p>
 
       <div
@@ -116,14 +116,14 @@ export default function CameraMode() {
           isCapturing ? "bg-red-500" : "bg-green-500"
         }`}
       >
-        {isCapturing ? "Stop Capture" : "Start Capture"}
+        {isCapturing ? "Stop Capture" : "เริ่มตรวจจับ"}
       </button>
 
       <div className="text-center mt-3">
-        <h2 className="text-md font-bold mb-2">Detected Plates</h2>
+        <h2 className="text-md font-bold mb-2">ผลลัพธ์</h2>
         <div className="border text-left border-gray-300 rounded-lg p-2 w-96 overflow-y-auto">
           <p className="text-gray-400 text-center">
-            {plates.length > 0 ? plates.join(", ") : "No plates detected yet."}
+            {plates.length > 0 ? plates.join(", ") : "ยังไม่พบป้ายทะเบียน"}
           </p>
         </div>
       </div>

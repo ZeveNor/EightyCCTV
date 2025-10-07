@@ -13,29 +13,36 @@ import {
 const MENU_CONST = {
   INTERACTIVE_MAP: "Interactive Map",
   PARKING_HISTORY: "Parking History",
-  SEARCH_MEMBER: "Search Member",
+  CARPLATE_DETECTOR: "Carplate Detector",
+  CARPLATE_HISTORY: "Carplate History",
+  CREATE_GUEST_PLATE: "Create Guest Plate",
+  CAR_MANAGEMENT: "Car Management",
   CAR_HISTORY: "Car Plate History",
-  ADD_MEMBER: "Add Member",
-  EDIT_MEMBER: "Edit Member",
-  SEARCH_MEMBERS: "Search Members",
+  MANAGE_MEMBER: "Manage Member",
+  MY_CARS: "My Cars",
   MEMBER_HISTORY: "Member History",
   WATCH_RECORDS: "Watch Records",
 };
 
-export default function NavbarComponent() {
+export default function NavbarComponent({
+  selectedMenu,
+  setSelectedMenu
+}: {
+  selectedMenu?: string;
+  setSelectedMenu?: (menu: string) => void;
+} = {}) {
   return (
     <div className="navbar bg-white shadow-lg">
       {/* navbar left */}
       <div className="navbar-start">
-        <a className="font-bold text-xl ml-5">ระบบจัดการลานจอดรถ</a>
+        <a className="font-bold md:text-xl ml-5">ระบบจัดการลานจอดรถ</a>
       </div>
       {/* navbar center */}
       <div className="navbar-center"></div>
       {/* navbar right */}
       <div className="navbar-end flex items-center gap-2">
-        <NavbarMonbile />
+        <NavbarMonbile selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
         <Profile />
-
       </div>
     </div>
   );
@@ -125,7 +132,7 @@ export function Profile() {
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-6 rounded-full">
           <img
-            src={avatar || "/default-avatar.png"}
+            src={avatar || "https://static.vecteezy.com/system/resources/previews/024/983/914/large_2x/simple-user-default-icon-free-png.png"}
             alt="Profile Avatar"
           />
         </div>
