@@ -10,14 +10,14 @@ export default function MemberSidebar(
   return (
     <li>
       <details>
-        <summary className="text-lg">Members</summary>
+        <summary className="text-lg">ระบบสมาชิก</summary>
         <ul className="text-md">
           <li>
             <button
               onClick={() => setSelectedMenu(MENU.MANAGE_MEMBER)}
-              className={selectedMenu === MENU.ADD_MEMBER ? "font-bold" : ""}
+              className={selectedMenu === MENU.MANAGE_MEMBER ? "font-bold" : ""} 
             >
-              Members Management
+              จัดการสมาชิก
             </button>
           </li>
           <li>
@@ -25,7 +25,7 @@ export default function MemberSidebar(
               onClick={() => setSelectedMenu(MENU.MY_CARS)}
               className={selectedMenu === MENU.MY_CARS ? "font-bold" : ""}
             >
-              My Cars
+              รถของฉัน
             </button>
           </li>
 
@@ -34,7 +34,7 @@ export default function MemberSidebar(
               onClick={() => setSelectedMenu(MENU.MEMBER_HISTORY)}
               className={selectedMenu === MENU.MEMBER_HISTORY ? "font-bold" : ""}
             >
-              History
+              ประวัติการเข้าออกของฉัน
             </button>
           </li>
         </ul>

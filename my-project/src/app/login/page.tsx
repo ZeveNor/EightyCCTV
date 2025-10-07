@@ -13,7 +13,6 @@ export default function LoginPage() {
   // Log only the relevant parts to avoid printing large or Promise-like objects
   console.debug('[login] response status:', res?.result?.status ?? res?.status, 'token?', Boolean(res?.result?.data?.token));
     
-
     if (res.result.status === 200) {
       localStorage.setItem("authToken", res.result.data.token);
       localStorage.setItem("userID", res.result.data.user.id);
@@ -88,7 +87,10 @@ export default function LoginPage() {
           </div>
 
           <button className="btn btn-neutral mt-4 w-full" type="submit">ล็อกอิน</button>
-          <a href="/register" className="link mt-4 block text-center">สร้างบัญชีใหม่</a>
+          <div className="flex justify-between">
+            <a href="/register" className="link mt-4 block text-center">สร้างบัญชีใหม่</a>
+            <a href="/reset" className="link mt-4 block text-center">ลืมรหัสผ่าน?</a>
+          </div>
         </form>
       </fieldset>
     </div>
